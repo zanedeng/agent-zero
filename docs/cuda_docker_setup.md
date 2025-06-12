@@ -1,57 +1,57 @@
-# Agent Zero: CUDA GPU Support 🚀
+# Agent Zero：CUDA GPU 支持 🚀
 
-This guide explains how to build and run Agent Zero with NVIDIA GPU acceleration using CUDA. Running with CUDA enables faster performance for AI workloads by leveraging your GPU.
-
----
-
-## Prerequisites
-
-Before you begin, ensure you have:
-
-1. **NVIDIA GPU** with CUDA capability
-2. **NVIDIA Driver** installed on your host system
-3. **NVIDIA Container Toolkit** ([Install Guide](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html))  
-   _This enables Docker to access your GPU_
-4. **Docker** and **Docker Compose** installed
+本指南解释了如何使用 CUDA 构建和运行支持 NVIDIA GPU 加速的 Agent Zero。通过 CUDA 运行可以利用 GPU 实现 AI 工作负载的更快性能。
 
 ---
 
-## 1. Build the CUDA Docker Image
+## 前提条件
 
-Open a terminal in this directory and run:
+在开始之前，请确保您具备：
+
+1. 具有 CUDA 功能的 **NVIDIA GPU**
+2. 在主机系统上安装的 **NVIDIA 驱动程序**
+3. **NVIDIA Container Toolkit**（[安装指南](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html)）  
+   _这使 Docker 能够访问您的 GPU_
+4. 已安装 **Docker** 和 **Docker Compose**
+
+---
+
+## 1. 构建 CUDA Docker 镜像
+
+在此目录中打开终端并运行：
 
 ```bash
-# Set the branch you want to build from (default: main)
+# 设置要构建的分支（默认：main）
 $branch="main"
 docker build --no-cache -t frdel/agent-zero-run-cuda:testing --build-arg BRANCH=$branch -f Dockerfile.cuda .
 ```
 
 ---
 
-## 2. Run Agent Zero with CUDA Support
+## 2. 使用 CUDA 支持运行 Agent Zero
 
-You can start Agent Zero with GPU support using Docker Compose:
+您可以使用 Docker Compose 启动支持 GPU 的 Agent Zero：
 
 ```bash
-# On Linux, macOS, or Windows PowerShell:
+# 在 Linux、macOS 或 Windows PowerShell 上：
 docker-compose -f docker-compose.cuda.yml up -d
 ```
 
-- This will launch Agent Zero in the background with GPU acceleration enabled.
+- 这将在后台启动启用了 GPU 加速的 Agent Zero。
 
 ---
 
-## 3. Access Agent Zero
+## 3. 访问 Agent Zero
 
-Once the container is running, open your browser and go to:
+容器运行后，打开浏览器并访问：
 
 [http://localhost:50080](http://localhost:50080)
 
 ---
 
-## 4. Stopping Agent Zero
+## 4. 停止 Agent Zero
 
-To stop the CUDA-enabled Agent Zero container:
+要停止启用 CUDA 的 Agent Zero 容器：
 
 ```bash
 docker-compose -f docker-compose.cuda.yml down
@@ -59,46 +59,46 @@ docker-compose -f docker-compose.cuda.yml down
 
 ---
 
-## 5. Switching Between CPU and GPU Versions
+## 5. 在 CPU 和 GPU 版本之间切换
 
-You can easily switch between the CPU and GPU versions:
+您可以轻松地在 CPU 和 GPU 版本之间切换：
 
-1. **Stop the currently running version:**
+1. **停止当前运行的版本：**
    ```bash
-   # For CPU version:
+   # CPU 版本：
    docker-compose down
-   # For GPU version:
+   # GPU 版本：
    docker-compose -f docker-compose.cuda.yml down
    ```
 
-2. **Start the version you want:**
+2. **启动您想要的版本：**
    ```bash
-   # CPU version:
+   # CPU 版本：
    docker-compose -f docker-compose.yml up -d
 
-   # GPU (CUDA) version:
+   # GPU（CUDA）版本：
    docker-compose -f docker-compose.cuda.yml up -d
    ```
 
 ---
 
-## Troubleshooting & Tips
+## 故障排除和提示
 
-- **First time setup may take several minutes** as dependencies are downloaded and installed.
-- If you encounter issues with GPU access, verify your NVIDIA drivers and the NVIDIA Container Toolkit are correctly installed.
-- To check if CUDA is available inside the container, you can run:
+- **首次设置可能需要几分钟**，因为需要下载和安装依赖项。
+- 如果遇到 GPU 访问问题，请验证您的 NVIDIA 驱动程序和 NVIDIA Container Toolkit 是否正确安装。
+- 要检查容器内是否可用 CUDA，您可以运行：
   ```bash
   docker exec -it <container_name> python3 -c "import torch; print(torch.cuda.is_available())"
   ```
-- For advanced configuration, see the comments in [`Dockerfile.cuda`](mdc:docker/run/Dockerfile.cuda).
+- 有关高级配置，请参阅 [`Dockerfile.cuda`](mdc:docker/run/Dockerfile.cuda) 中的注释。
 
 ---
 
-## More Information
+## 更多信息
 
-- [NVIDIA Container Toolkit Documentation](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html)
-- [Agent Zero Project](https://github.com/frdel/agent-zero) (replace with your actual repo link if different)
+- [NVIDIA Container Toolkit 文档](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html)
+- [Agent Zero 项目](https://github.com/frdel/agent-zero)（如果不同，请替换为您的实际仓库链接）
 
 ---
 
-**Enjoy accelerated AI with Agent Zero and CUDA!**
+**享受 Agent Zero 和 CUDA 带来的加速 AI 体验！**

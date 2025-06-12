@@ -1,42 +1,40 @@
-# Users installation guide for Windows, macOS and Linux
+# Windows、macOS 和 Linux 用户安装指南
 
-Click to open a video to learn how to install Agent Zero:
+点击观看安装 Agent Zero 的视频教程：
 
-[![Easy Installation guide](/docs/res/easy_ins_vid.png)](https://www.youtube.com/watch?v=L1_peV8szf8)
+[![简易安装指南](/docs/res/easy_ins_vid.png)](https://www.youtube.com/watch?v=L1_peV8szf8)
 
-The following user guide provides instructions for installing and running Agent Zero using Docker, which is the primary runtime environment for the framework. For developers and contributors, we also provide instructions for setting up the [full development environment](#in-depth-guide-for-full-binaries-installation).
+以下用户指南提供了使用 Docker 安装和运行 Agent Zero 的说明，Docker 是该框架的主要运行环境。对于开发者和贡献者，我们还提供了[完整开发环境](#in-depth-guide-for-full-binaries-installation)的设置说明。
 
+## Windows、macOS 和 Linux 设置指南
 
-## Windows, macOS and Linux Setup Guide
+1. **安装 Docker Desktop：**
+- Docker Desktop 为 Agent Zero 提供运行环境，确保跨平台的一致性和安全性
+- 整个框架在 Docker 容器内运行，提供隔离和便捷部署
+- 作为用户友好的 GUI 应用程序适用于所有主要操作系统
 
+1.1. 访问 Docker Desktop 下载页面[这里](https://www.docker.com/products/docker-desktop/)。如果链接无效，只需在网络上搜索"docker desktop download"。
 
-1. **Install Docker Desktop:** 
-- Docker Desktop provides the runtime environment for Agent Zero, ensuring consistent behavior and security across platforms
-- The entire framework runs within a Docker container, providing isolation and easy deployment
-- Available as a user-friendly GUI application for all major operating systems
-
-1.1. Go to the download page of Docker Desktop [here](https://www.docker.com/products/docker-desktop/). If the link does not work, just search the web for "docker desktop download".
-
-1.2. Download the version for your operating system. For Windows users, the Intel/AMD version is the main download button.
+1.2. 下载适用于您操作系统的版本。对于 Windows 用户，Intel/AMD 版本是主要下载按钮。
 
 <img src="res/setup/image-8.png" alt="docker download" width="200"/>
 <br><br>
 
 > [!NOTE]
-> **Linux Users:** You can install either Docker Desktop or docker-ce (Community Edition). 
-> For Docker Desktop, follow the instructions for your specific Linux distribution [here](https://docs.docker.com/desktop/install/linux-install/). 
-> For docker-ce, follow the instructions [here](https://docs.docker.com/engine/install/).
+> **Linux 用户：** 您可以安装 Docker Desktop 或 docker-ce（社区版）。
+> 对于 Docker Desktop，请按照[这里](https://docs.docker.com/desktop/install/linux-install/)针对您特定 Linux 发行版的说明进行操作。
+> 对于 docker-ce，请按照[这里](https://docs.docker.com/engine/install/)的说明进行操作。
 >
-> If you're using docker-ce, you'll need to add your user to the `docker` group:
+> 如果您使用 docker-ce，需要将用户添加到 `docker` 组：
 > ```bash
 > sudo usermod -aG docker $USER
 > ```
-> Log out and back in, then run:
+> 注销并重新登录，然后运行：
 > ```bash
 > docker login
 > ```
 
-1.3. Run the installer with default settings. On macOS, drag and drop the application to your Applications folder.
+1.3. 使用默认设置运行安装程序。在 macOS 上，将应用程序拖放到 Applications 文件夹。
 
 <img src="res/setup/image-9.png" alt="docker install" width="300"/>
 <img src="res/setup/image-10.png" alt="docker install" width="300"/>
@@ -44,350 +42,345 @@ The following user guide provides instructions for installing and running Agent 
 <img src="res/setup/image-12.png" alt="docker install" width="300"/>
 <br><br>
 
-1.4. Once installed, launch Docker Desktop: 
+1.4. 安装完成后，启动 Docker Desktop：
 
 <img src="res/setup/image-11.png" alt="docker installed" height="100"/>
 <img src="res/setup/image-13.png" alt="docker installed" height="100"/>
 <br><br>
 
 > [!IMPORTANT]  
-> **macOS Configuration:** In Docker Desktop's preferences (Docker menu) → Settings → 
-> Advanced, enable "Allow the default Docker socket to be used (requires password)."
+> **macOS 配置：** 在 Docker Desktop 的偏好设置（Docker 菜单）→ 设置 → 
+> 高级中，启用"允许使用默认 Docker socket（需要密码）。"
 
 ![docker socket macOS](res/setup/macsocket.png)
 
-2. **Run Agent Zero:**
+2. **运行 Agent Zero：**
 
-- Note: Agent Zero also offers a Hacking Edition based on Kali linux with modified prompts for cybersecurity tasks. The setup is the same as the regular version, just use the frdel/agent-zero-run:hacking image instead of frdel/agent-zero-run.
+- 注意：Agent Zero 还提供基于 Kali linux 的黑客版本，具有针对网络安全任务的修改提示。设置与常规版本相同，只需使用 frdel/agent-zero-run:hacking 镜像而不是 frdel/agent-zero-run。
 
-2.1. Pull the Agent Zero Docker image:
-- Search for `frdel/agent-zero-run` in Docker Desktop
-- Click the `Pull` button
-- The image will be downloaded to your machine in a few minutes
+2.1. 拉取 Agent Zero Docker 镜像：
+- 在 Docker Desktop 中搜索 `frdel/agent-zero-run`
+- 点击 `Pull` 按钮
+- 镜像将在几分钟内下载到您的机器上
 
 ![docker pull](res/setup/1-docker-image-search.png)
 
 > [!TIP]
-> Alternatively, run the following command in your terminal:
+> 或者，在终端中运行以下命令：
 >
 > ```bash
 > docker pull frdel/agent-zero-run
 > ```
 
-2.2. Create a data directory for persistence:
-- Choose or create a directory on your machine where you want to store Agent Zero's data
-- This can be any location you prefer (e.g., `C:/agent-zero-data` or `/home/user/agent-zero-data`)
-- This directory will contain all your Agent Zero files, like the legacy root folder structure:
-  - `/memory` - Agent's memory and learned information
-  - `/knowledge` - Knowledge base
-  - `/instruments` - Instruments and functions
-  - `/prompts` - Prompt files
-  - `/work_dir` - Working directory
-  - `.env` - Your API keys
-  - `settings.json` - Your Agent Zero settings
+2.2. 创建数据目录用于持久化：
+- 在您的机器上选择或创建一个目录来存储 Agent Zero 的数据
+- 这可以是您喜欢的任何位置（例如，`C:/agent-zero-data` 或 `/home/user/agent-zero-data`）
+- 此目录将包含所有 Agent Zero 文件，如传统的根文件夹结构：
+  - `/memory` - 代理的记忆和学习信息
+  - `/knowledge` - 知识库
+  - `/instruments` - 工具和函数
+  - `/prompts` - 提示文件
+  - `/work_dir` - 工作目录
+  - `.env` - 您的 API 密钥
+  - `settings.json` - 您的 Agent Zero 设置
 
 > [!TIP]
-> Choose a location that's easy to access and backup. All your Agent Zero data 
-> will be directly accessible in this directory.
+> 选择一个易于访问和备份的位置。所有 Agent Zero 数据 
+> 都将直接在此目录中访问。
 
-2.3. Run the container:
-- In Docker Desktop, go back to the "Images" tab
-- Click the `Run` button next to the `frdel/agent-zero-run` image
-- Open the "Optional settings" menu
-- Set the port to `0` in the second "Host port" field (for automatic port assignment)
+2.3. 运行容器：
+- 在 Docker Desktop 中，返回"Images"标签
+- 点击 `frdel/agent-zero-run` 镜像旁边的 `Run` 按钮
+- 打开"Optional settings"菜单
+- 在第二个"Host port"字段中将端口设置为 `0`（用于自动端口分配）
 
-Optionally you can map local folders for file persistence:
-- Under "Volumes", configure:
-  - Host path: Your chosen directory (e.g., `C:\agent-zero-data`)
-  - Container path: `/a0`
+可选地，您可以映射本地文件夹以实现文件持久化：
+- 在"Volumes"下配置：
+  - Host path：您选择的目录（例如，`C:\agent-zero-data`）
+  - Container path：`/a0`
 
 ![docker port mapping](res/setup/3-docker-port-mapping.png)
 
-- Click the `Run` button in the "Images" tab.
-- The container will start and show in the "Containers" tab
+- 在"Images"标签中点击 `Run` 按钮
+- 容器将启动并显示在"Containers"标签中
 
 ![docker containers](res/setup/4-docker-container-started.png)
 
 > [!TIP]
-> Alternatively, run the following command in your terminal:
+> 或者，在终端中运行以下命令：
 > ```bash
 > docker run -p $PORT:80 -v /path/to/your/data:/a0 frdel/agent-zero-run
 > ```
-> - Replace `$PORT` with the port you want to use (e.g., `50080`)
-> - Replace `/path/to/your/data` with your chosen directory path
+> - 将 `$PORT` 替换为您要使用的端口（例如，`50080`）
+> - 将 `/path/to/your/data` 替换为您选择的目录路径
 
-2.4. Access the Web UI:
-- The framework will take a few seconds to initialize and the Docker logs will look like the image below.
-- Find the mapped port in Docker Desktop (shown as `<PORT>:80`) or click the port right under the container ID as shown in the image below
+2.4. 访问 Web UI：
+- 框架需要几秒钟初始化，Docker 日志将如下所示
+- 在 Docker Desktop 中找到映射的端口（显示为 `<PORT>:80`）或点击容器 ID 下方的端口，如下所示
 
 ![docker logs](res/setup/5-docker-click-to-open.png)
 
-- Open `http://localhost:<PORT>` in your browser
-- The Web UI will open. Agent Zero is ready for configuration!
+- 在浏览器中打开 `http://localhost:<PORT>`
+- Web UI 将打开。Agent Zero 已准备好进行配置！
 
 ![docker ui](res/setup/6-docker-a0-running.png)
 
 > [!TIP]
-> You can also access the Web UI by clicking the ports right under the container ID in Docker Desktop.
+> 您也可以通过点击 Docker Desktop 中容器 ID 下方的端口来访问 Web UI。
 
 > [!NOTE]
-> After starting the container, you'll find all Agent Zero files in your chosen 
-> directory. You can access and edit these files directly on your machine, and 
-> the changes will be immediately reflected in the running container.
+> 启动容器后，您将在选择的目录中找到所有 Agent Zero 文件。您可以直接在机器上访问和编辑这些文件，
+> 更改将立即反映在运行中的容器中。
 
-3. Configure Agent Zero
-- Refer to the following sections for a full guide on how to configure Agent Zero.
+3. 配置 Agent Zero
+- 请参考以下部分了解如何配置 Agent Zero 的完整指南。
 
-## Settings Configuration
-Agent Zero provides a comprehensive settings interface to customize various aspects of its functionality. Access the settings by clicking the "Settings"button with a gear icon in the sidebar.
+## 设置配置
+Agent Zero 提供了一个全面的设置界面，用于自定义其功能的各个方面。通过点击侧边栏中带有齿轮图标的"Settings"按钮访问设置。
 
-### Agent Configuration
-- **Prompts Subdirectory:** Choose the subdirectory within `/prompts` for agent behavior customization. The 'default' directory contains the standard prompts.
-- **Memory Subdirectory:** Select the subdirectory for agent memory storage, allowing separation between different instances.
-- **Knowledge Subdirectory:** Specify the location of custom knowledge files to enhance the agent's understanding.
+### 代理配置
+- **提示子目录：** 选择 `/prompts` 内的子目录用于代理行为自定义。'default' 目录包含标准提示。
+- **记忆子目录：** 选择代理记忆存储的子目录，允许在不同实例之间分离。
+- **知识子目录：** 指定自定义知识文件的位置，以增强代理的理解能力。
 
 ![settings](res/setup/settings/1-agentConfig.png)
 
-### Chat Model Settings
-- **Provider:** Select the chat model provider (e.g., Ollama)
-- **Model Name:** Choose the specific model (e.g., llama3.2)
-- **Temperature:** Adjust response randomness (0 for deterministic, higher values for more creative responses)
-- **Context Length:** Set the maximum token limit for context window
-- **Context Window Space:** Configure how much of the context window is dedicated to chat history
+### 聊天模型设置
+- **提供商：** 选择聊天模型提供商（例如，Ollama）
+- **模型名称：** 选择特定模型（例如，llama3.2）
+- **温度：** 调整响应随机性（0 表示确定性，较高值表示更具创造性的响应）
+- **上下文长度：** 设置上下文窗口的最大令牌限制
+- **上下文窗口空间：** 配置上下文窗口中用于聊天历史的部分
 
 ![chat model settings](res/setup/settings/2-chat-model.png)
 
-### Utility Model Configuration
-- **Provider & Model:** Select a smaller, faster model for utility tasks like memory organization and summarization
-- **Temperature:** Adjust the determinism of utility responses
+### 实用模型配置
+- **提供商和模型：** 为记忆组织和摘要等实用任务选择更小、更快的模型
+- **温度：** 调整实用响应的确定性
 
-### Embedding Model Settings
-- **Provider:** Choose the embedding model provider (e.g., OpenAI)
-- **Model Name:** Select the specific embedding model (e.g., text-embedding-3-small)
+### 嵌入模型设置
+- **提供商：** 选择嵌入模型提供商（例如，OpenAI）
+- **模型名称：** 选择特定嵌入模型（例如，text-embedding-3-small）
 
-### Speech to Text Options
-- **Model Size:** Choose the speech recognition model size
-- **Language Code:** Set the primary language for voice recognition
-- **Silence Settings:** Configure silence threshold, duration, and timeout parameters for voice input
+### 语音转文本选项
+- **模型大小：** 选择语音识别模型大小
+- **语言代码：** 设置语音识别的主要语言
+- **静音设置：** 配置语音输入的静音阈值、持续时间和超时参数
 
-### API Keys
-- Configure API keys for various service providers directly within the Web UI
-- Click `Save` to confirm your settings
+### API 密钥
+- 直接在 Web UI 中配置各种服务提供商的 API 密钥
+- 点击 `Save` 确认您的设置
 
-### Authentication
-- **UI Login:** Set username for web interface access
-- **UI Password:** Configure password for web interface security
-- **Root Password:** Manage Docker container root password for SSH access
+### 认证
+- **UI 登录：** 设置 Web 界面访问的用户名
+- **UI 密码：** 配置 Web 界面安全的密码
+- **Root 密码：** 管理 Docker 容器 root 密码用于 SSH 访问
 
 ![settings](res/setup/settings/3-auth.png)
 
-### Development Settings
-- **RFC Parameters (local instances only):** configure URLs and ports for remote function calls between instances
-- **RFC Password:** Configure password for remote function calls
-Learn more about Remote Function Calls and their purpose [here](#7-configure-agent-zero-rfc).
+### 开发设置
+- **RFC 参数（仅限本地实例）：** 配置实例之间远程函数调用的 URL 和端口
+- **RFC 密码：** 配置远程函数调用的密码
+在[这里](#7-configure-agent-zero-rfc)了解更多关于远程函数调用及其用途的信息。
 
 > [!IMPORTANT]
-> Always keep your API keys and passwords secure.
+> 始终确保您的 API 密钥和密码安全。
 
-# Choosing Your LLMs
-The Settings page is the control center for selecting the Large Language Models (LLMs) that power Agent Zero.  You can choose different LLMs for different roles:
+# 选择您的 LLM
+设置页面是选择为 Agent Zero 提供动力的大型语言模型（LLM）的控制中心。您可以为不同角色选择不同的 LLM：
 
-| LLM Role | Description |
+| LLM 角色 | 描述 |
 | --- | --- |
-| `chat_llm` | This is the primary LLM used for conversations and generating responses. |
-| `utility_llm` | This LLM handles internal tasks like summarizing messages, managing memory, and processing internal prompts.  Using a smaller, less expensive model here can improve efficiency. |
-| `embedding_llm` | This LLM is responsible for generating embeddings used for memory retrieval and knowledge base lookups. Changing the `embedding_llm` will re-index all of A0's memory. |
+| `chat_llm` | 这是用于对话和生成响应的主要 LLM。 |
+| `utility_llm` | 这个 LLM 处理内部任务，如总结消息、管理记忆和处理内部提示。使用更小、更便宜的模型可以提高效率。 |
+| `embedding_llm` | 这个 LLM 负责生成用于记忆检索和知识库查找的嵌入。更改 `embedding_llm` 将重新索引 A0 的所有记忆。 |
 
-**How to Change:**
-1. Open Settings page in the Web UI.
-2. Choose the provider for the LLM for each role (Chat model, Utility model, Embedding model) and write the model name.
-3. Click "Save" to apply the changes.
+**如何更改：**
+1. 在 Web UI 中打开设置页面。
+2. 为每个角色（聊天模型、实用模型、嵌入模型）选择 LLM 提供商并写入模型名称。
+3. 点击"Save"应用更改。
 
-## Important Considerations
+## 重要注意事项
 
 > [!CAUTION]
-> Changing the `embedding_llm` will re-index all the memory and knowledge, and 
-> requires clearing the `memory` folder to avoid errors, as the embeddings can't be 
-> mixed in the vector database. Note that this will DELETE ALL of Agent Zero's memory.
+> 更改 `embedding_llm` 将重新索引所有记忆和知识，并且
+> 需要清除 `memory` 文件夹以避免错误，因为嵌入不能在向量数据库中混合。注意这将删除 Agent Zero 的所有记忆。
 
-## Installing and Using Ollama (Local Models)
-If you're interested in Ollama, which is a powerful tool that allows you to run various large language models locally, here's how to install and use it:
+## 安装和使用 Ollama（本地模型）
+如果您对 Ollama 感兴趣，这是一个强大的工具，允许您在本地运行各种大型语言模型，以下是安装和使用方法：
 
-#### First step: installation
-**On Windows:**
+#### 第一步：安装
+**在 Windows 上：**
 
-Download Ollama from the official website and install it on your machine.
+从官方网站下载 Ollama 并在您的机器上安装。
 
-<button>[Download Ollama Setup](https://ollama.com/download/OllamaSetup.exe)</button>
+<button>[下载 Ollama 安装程序](https://ollama.com/download/OllamaSetup.exe)</button>
 
-**On macOS:**
+**在 macOS 上：**
 ```
 brew install ollama
 ```
-Otherwise choose macOS installer from the [official website](https://ollama.com/).
+或者从[官方网站](https://ollama.com/)选择 macOS 安装程序。
 
-**On Linux:**
+**在 Linux 上：**
 ```bash
 curl -fsSL https://ollama.com/install.sh | sh
 ```
 
-**Finding Model Names:**
-Visit the [Ollama model library](https://ollama.com/library) for a list of available models and their corresponding names.  The format is usually `provider/model-name` (or just `model-name` in some cases).
+**查找模型名称：**
+访问 [Ollama 模型库](https://ollama.com/library) 获取可用模型列表及其对应名称。格式通常是 `provider/model-name`（在某些情况下只是 `model-name`）。
 
-#### Second step: pulling the model
-**On Windows, macOS, and Linux:**
+#### 第二步：拉取模型
+**在 Windows、macOS 和 Linux 上：**
 ```
 ollama pull <model-name>
 ```
 
-1. Replace `<model-name>` with the name of the model you want to use.  For example, to pull the Mistral Large model, you would use the command `ollama pull mistral-large`.
+1. 将 `<model-name>` 替换为您要使用的模型名称。例如，要拉取 Mistral Large 模型，您将使用命令 `ollama pull mistral-large`。
 
-2. A CLI message should confirm the model download on your system
+2. CLI 消息应该确认模型已在您的系统上下载
 
-#### Selecting your model within Agent Zero
-1. Once you've downloaded your model(s), you must select it in the Settings page of the GUI. 
+#### 在 Agent Zero 中选择您的模型
+1. 下载模型后，您必须在 GUI 的设置页面中选择它。
 
-2. Within the Chat model, Utility model, or Embedding model section, choose Ollama as provider.
+2. 在聊天模型、实用模型或嵌入模型部分中，选择 Ollama 作为提供商。
 
-3. Write your model code as expected by Ollama, in the format `llama3.2` or `qwen2.5:7b`
+3. 按照 Ollama 预期的格式写入您的模型代码，格式为 `llama3.2` 或 `qwen2.5:7b`
 
-4. Click `Save` to confirm your settings.
+4. 点击 `Save` 确认您的设置。
 
 ![ollama](res/setup/settings/4-local-models.png)
 
-#### Managing your downloaded models
-Once you've downloaded some models, you might want to check which ones you have available or remove any you no longer need.
+#### 管理您下载的模型
+下载一些模型后，您可能想要检查哪些模型可用或删除不再需要的模型。
 
-- **Listing downloaded models:** 
-  To see a list of all the models you've downloaded, use the command:
+- **列出下载的模型：** 
+  要查看所有已下载模型的列表，使用命令：
   ```
   ollama list
   ```
-- **Removing a model:**
-  If you need to remove a downloaded model, you can use the `ollama rm` command followed by the model name:
+- **删除模型：**
+  如果需要删除已下载的模型，可以使用 `ollama rm` 命令后跟模型名称：
   ```
   ollama rm <model-name>
   ```
 
+- 尝试不同的模型组合，找到最适合您需求的性能和成本平衡。例如，更快和更低延迟的 LLM 会有所帮助，您也可以使用 `faiss_gpu` 代替 `faiss_cpu` 用于记忆。
 
-- Experiment with different model combinations to find the balance of performance and cost that best suits your needs. E.g., faster and lower latency LLMs will help, and you can also use `faiss_gpu` instead of `faiss_cpu` for the memory.
+## 在移动设备上使用 Agent Zero
+Agent Zero 的 Web UI 可以通过 Docker 容器从网络上的任何设备访问：
 
-## Using Agent Zero on your mobile device
-Agent Zero's Web UI is accessible from any device on your network through the Docker container:
-
-1. The Docker container automatically exposes the Web UI on all network interfaces
-2. Find the mapped port in Docker Desktop:
-   - Look under the container name (usually in the format `<PORT>:80`)
-   - For example, if you see `32771:80`, your port is `32771`
-3. Access the Web UI from any device using:
-   - Local access: `http://localhost:<PORT>`
-   - Network access: `http://<YOUR_COMPUTER_IP>:<PORT>`
+1. Docker 容器自动在所有网络接口上暴露 Web UI
+2. 在 Docker Desktop 中找到映射的端口：
+   - 查看容器名称下（通常格式为 `<PORT>:80`）
+   - 例如，如果您看到 `32771:80`，您的端口是 `32771`
+3. 从任何设备访问 Web UI：
+   - 本地访问：`http://localhost:<PORT>`
+   - 网络访问：`http://<YOUR_COMPUTER_IP>:<PORT>`
 
 > [!TIP]
-> - Your computer's IP address is usually in the format `192.168.x.x` or `10.0.x.x`
-> - You can find your external IP address by running `ipconfig` (Windows) or `ifconfig` (Linux/Mac)
-> - The port is automatically assigned by Docker unless you specify one
+> - 您计算机的 IP 地址通常格式为 `192.168.x.x` 或 `10.0.x.x`
+> - 您可以通过运行 `ipconfig`（Windows）或 `ifconfig`（Linux/Mac）找到您的外部 IP 地址
+> - 除非您指定，否则端口由 Docker 自动分配
 
 > [!NOTE]
-> If you're running Agent Zero directly on your system (legacy approach) instead of 
-> using Docker, you'll need to configure the host manually in `run_ui.py` to run on all interfaces using `host="0.0.0.0"`.
+> 如果您直接在系统上运行 Agent Zero（传统方法）而不是
+> 使用 Docker，您需要在 `run_ui.py` 中手动配置主机以在所有接口上运行，使用 `host="0.0.0.0"`。
 
-For developers or users who need to run Agent Zero directly on their system,see the [In-Depth Guide for Full Binaries Installation](#in-depth-guide-for-full-binaries-installation).
+对于需要在系统上直接运行 Agent Zero 的开发者或用户，请参阅[完整二进制安装深入指南](#in-depth-guide-for-full-binaries-installation)。
 
-# How to update Agent Zero
+# 如何更新 Agent Zero
 
-1. **If you come from the previous version of Agent Zero:**
-- Your data is safely stored across various directories and files inside the Agent Zero folder.
-- To update to the new Docker runtime version, you might want to backup the following files and directories:
-  - `/memory` - Agent's memory
-  - `/knowledge` - Custom knowledge base (if you imported any custom knowledge files)
-  - `/instruments` - Custom instruments and functions (if you created any custom)
-  - `/tmp/settings.json` - Your Agent Zero settings
-  - `/tmp/chats/` - Your chat history
-- Once you have saved these files and directories, you can proceed with the Docker runtime [installation instructions above](#windows-macos-and-linux-setup-guide) setup guide.
-- Reach for the folder where you saved your data and copy it to the new Agent Zero folder set during the installation process.
-- Agent Zero will automatically detect your saved data and use it across memory, knowledge, instruments, prompts and settings.
+1. **如果您来自 Agent Zero 的先前版本：**
+- 您的数据安全地存储在 Agent Zero 文件夹内的各种目录和文件中。
+- 要更新到新的 Docker 运行时版本，您可能需要备份以下文件和目录：
+  - `/memory` - 代理的记忆
+  - `/knowledge` - 自定义知识库（如果您导入了任何自定义知识文件）
+  - `/instruments` - 自定义工具和函数（如果您创建了任何自定义）
+  - `/tmp/settings.json` - 您的 Agent Zero 设置
+  - `/tmp/chats/` - 您的聊天历史
+- 保存这些文件和目录后，您可以按照上述 Docker 运行时[安装说明](#windows-macos-and-linux-setup-guide)设置指南进行操作。
+- 找到保存数据的文件夹，并将其复制到安装过程中设置的新 Agent Zero 文件夹中。
+- Agent Zero 将自动检测您的保存数据并在记忆、知识、工具、提示和设置中使用它。
 
 > [!IMPORTANT]
-> If you have issues loading your settings, you can try to delete the `/tmp/settings.json` file and let Agent Zero generate a new one.
-> The same goes for chats in `/tmp/chats/`, they might be incompatible with the new version
+> 如果加载设置时遇到问题，您可以尝试删除 `/tmp/settings.json` 文件并让 Agent Zero 生成新的。
+> 对于 `/tmp/chats/` 中的聊天也是如此，它们可能与新版本不兼容
 
-2. **Update Process (Docker Desktop)**
-- Go to Docker Desktop and stop the container from the "Containers" tab
-- Right-click and select "Remove" to remove the container
-- Go to "Images" tab and remove the `frdel/agent-zero-run` image or click the three dots to pull the difference and update the Docker image.
+2. **更新过程（Docker Desktop）**
+- 转到 Docker Desktop 并从"Containers"标签停止容器
+- 右键点击并选择"Remove"以删除容器
+- 转到"Images"标签并删除 `frdel/agent-zero-run` 镜像或点击三个点以拉取差异并更新 Docker 镜像。
 
 ![docker delete image](res/setup/docker-delete-image-1.png)
 
-- Search and pull the new image if you chose to remove it
-- Run the new container with the same volume settings as the old one
+- 如果您选择删除它，搜索并拉取新镜像
+- 使用与旧容器相同的卷设置运行新容器
 
 > [!IMPORTANT]
-> Make sure to use the same volume mount path when running the new
-> container to preserve your data. The exact path depends on where you stored
-> your Agent Zero data directory (the chosen directory on your machine).
+> 运行新容器时确保使用相同的卷挂载路径以保留您的数据。具体路径取决于您在机器上存储 Agent Zero 数据目录的位置（您选择的目录）。
 
 > [!TIP]
-> Alternatively, run the following commands in your terminal:
+> 或者，在终端中运行以下命令：
 >
 > ```bash
-> # Stop the current container
+> # 停止当前容器
 > docker stop agent-zero
 >
-> # Remove the container (data is safe in the folder)
+> # 删除容器（数据在文件夹中是安全的）
 > docker rm agent-zero
 >
-> # Remove the old image
+> # 删除旧镜像
 > docker rmi frdel/agent-zero-run
 >
-> # Pull the latest image
+> # 拉取最新镜像
 > docker pull frdel/agent-zero-run
 >
-> # Run new container with the same volume mount
+> # 使用相同的卷挂载运行新容器
 > docker run -p $PORT:80 -v /path/to/your/data:/a0 frdel/agent-zero-run
 > ```
 
-3. **Full Binaries**
-- Using Git/GitHub: Pull the latest version of the Agent Zero repository. 
-- The custom knowledge, solutions, memory, and other data will get ignored, so you don't need to worry about losing any of your custom data. The same goes for your .env file with all of your API keys and settings.json.
+3. **完整二进制**
+- 使用 Git/GitHub：拉取 Agent Zero 仓库的最新版本。
+- 自定义知识、解决方案、记忆和其他数据将被忽略，所以您不必担心丢失任何自定义数据。您的 .env 文件和所有 API 密钥以及 settings.json 也是如此。
 
 > [!WARNING]  
-> - If you update manually, beware: save your .env file with the API keys, and look for new dependencies in requirements.txt. 
-> - If any changes are made to the requirements of the updated version, you have to execute this command inside the a0 conda env after activating it:
+> - 如果手动更新，请注意：保存您的 .env 文件和 API 密钥，并查看 requirements.txt 中的新依赖项。
+> - 如果更新版本对要求进行了任何更改，您必须在激活 a0 conda 环境后在其中执行此命令：
 > ```bash
 > pip install -r requirements.txt
 
-# In-Depth Guide for Full Binaries Installation
-- Agent Zero is a framework. It's made to be customized, edited, enhanced. Therefore you need to install the necessary components to run it when downloading its full binaries. This guide will help you to do so.
-- The following step by step instructions can be followed along with a video for this tutorial on how to make Agent Zero work with its full development environment.
+# 完整二进制安装深入指南
+- Agent Zero 是一个框架。它旨在被定制、编辑和增强。因此，在下载其完整二进制文件时，您需要安装运行它所需的必要组件。本指南将帮助您完成此操作。
+- 以下逐步说明可以配合本教程的视频一起进行，了解如何使用完整开发环境使 Agent Zero 工作。
 
-[![Video](res/setup/thumb_play.png)](https://youtu.be/8H7mFsvxKYQ)
+[![视频](res/setup/thumb_play.png)](https://youtu.be/8H7mFsvxKYQ)
 
-## Reminders:
-1. There's no need to install Python, Conda will manage that for you.
-2. You don't necessarily need API keys: Agent Zero can run with local models. For this tutorial though, we will leave it to the default OpenAI API. A guide for downloading Ollama along with local models is available [here](#installing-and-using-ollama-local-models).
-3. Visual Studio Code or any other code editor is not mandatory, but it makes it easier to navigate and edit files.
-4. Git/GitHub is not mandatory, you can download the framework files through your browser. We will not be showing how to use Git in this tutorial.
-5. Docker is not mandatory for the full binaries installation, since the framework will run on your machine connecting to the Docker container through the Web UI RFC functionality.
-6. Running Agent Zero without Docker makes the process more complicated and it's thought for developers and contributors.
+## 提醒：
+1. 无需安装 Python，Conda 将为您管理。
+2. 您不一定需要 API 密钥：Agent Zero 可以使用本地模型运行。不过，对于本教程，我们将使用默认的 OpenAI API。下载 Ollama 和本地模型的指南可在[这里](#installing-and-using-ollama-local-models)找到。
+3. Visual Studio Code 或任何其他代码编辑器不是必需的，但它使导航和编辑文件更容易。
+4. Git/GitHub 不是必需的，您可以通过浏览器下载框架文件。本教程不会展示如何使用 Git。
+5. Docker 对于完整二进制安装不是必需的，因为框架将在您的机器上运行，通过 Web UI RFC 功能连接到 Docker 容器。
+6. 不使用 Docker 运行 Agent Zero 会使过程更复杂，这是为开发者和贡献者设计的。
 
 > [!IMPORTANT]  
-> Linux instructions are provided as general instructions for any Linux distribution. If you're using a distribution other than Debian/Ubuntu, you may need to adjust the instructions accordingly.
+> Linux 说明作为适用于任何 Linux 发行版的一般说明提供。如果您使用的不是 Debian/Ubuntu 的发行版，您可能需要相应地调整说明。
 >
-> For Debian/Ubuntu, just follow the macOS instructions, as they are the same.
+> 对于 Debian/Ubuntu，只需按照 macOS 说明操作，因为它们相同。
 
-## 1. Install Conda (miniconda)
-- Conda is a Python environment manager, it will help you keep your projects and installations separated. 
-- It's a lightweight version of Anaconda that includes only conda, Python, the packages they depend on, and a small number of other useful packages, including pip, zlib and a few others.
+## 1. 安装 Conda（miniconda）
+- Conda 是一个 Python 环境管理器，它将帮助您保持项目和安装的分离。
+- 它是 Anaconda 的轻量级版本，仅包含 conda、Python、它们依赖的包以及少量其他有用的包，包括 pip、zlib 等。
 
-1. Go to the download page of miniconda [here](https://docs.anaconda.com/miniconda/#miniconda-latest-installer-links). If the link does not work, just search the web for "miniconda download".
-2. Based on your operating system, download the right installer of miniconda. For macOS select the version with "pkg" at the end.
+1. 访问 miniconda 下载页面[这里](https://docs.anaconda.com/miniconda/#miniconda-latest-installer-links)。如果链接无效，只需在网络上搜索"miniconda download"。
+2. 根据您的操作系统，下载正确的 miniconda 安装程序。对于 macOS，选择末尾带有"pkg"的版本。
 
 <img src="res/setup/image-1.png" alt="miniconda download win" width="500"/>
 <img src="res/setup/image-5.png" alt="miniconda download macos" width="500"/>
 <br><br>
 
-3. Run the installer and go through the installation process, here you can leave everything to default and just click Next, Next... The same goes for macOS with the "pkg" graphical installer.
+3. 运行安装程序并完成安装过程，这里您可以保留所有默认设置，只需点击下一步，下一步...对于 macOS 的"pkg"图形安装程序也是如此。
 
 <img src="res/setup/image.png" alt="miniconda install" width="200"/>
 <img src="res/setup/image-2.png" alt="miniconda install" width="200"/>
@@ -395,78 +388,77 @@ For developers or users who need to run Agent Zero directly on their system,see 
 <img src="res/setup/image-4.png" alt="miniconda install" width="200"/>
 <br><br>
 
-4. After the installation is complete, you should have "Anaconda Powershell Prompt" installed on your Windows machine. On macOS, when you open the Terminal application in your Applications folder and type "conda --version", you should see the version installed.
+4. 安装完成后，您的 Windows 机器上应该安装了"Anaconda Powershell Prompt"。在 macOS 上，当您在 Applications 文件夹中打开 Terminal 应用程序并输入"conda --version"时，您应该看到已安装的版本。
 
 <img src="res/setup/image-6.png" alt="miniconda installed" height="100"/>
 <img src="res/setup/image-7.png" alt="miniconda installed" height="100"/>
 <br><br>
 
+## 2. 下载 Agent Zero
+- 如果您知道如何使用 Git，可以从 GitHub 克隆 Agent Zero 仓库（https://github.com/frdel/agent-zero）。在本教程中，我将只展示如何下载文件。
 
-## 2. Download Agent Zero
-- You can clone the Agent Zero repository (https://github.com/frdel/agent-zero) from GitHub if you know how to use Git. In this tutorial I will just show how to download the files.
-
-1. Go to the Agent Zero releases [here](https://github.com/frdel/agent-zero/releases).
-2. The latest release is on the top of the list, click the "Source Code (zip)" button under "Assets" to download it.
+1. 访问 Agent Zero 发布页面[这里](https://github.com/frdel/agent-zero/releases)。
+2. 最新发布在列表顶部，点击"Assets"下的"Source Code (zip)"按钮下载。
 
 <img src="res/setup/image-14-u.png" alt="agent zero download" width="500"/>
 <br><br>
 
-3. Extract the downloaded archive where you want to have it. I will extract them to "agent-zero" folder on my Desktop - "C:\Users\frdel\Desktop\agent-zero" on Windows and "/Users/frdel/Desktop/agent-zero" on macOS.
+3. 将下载的存档解压到您想要的位置。我将它们解压到桌面上的"agent-zero"文件夹 - Windows 上的"C:\Users\frdel\Desktop\agent-zero"和 macOS 上的"/Users/frdel/Desktop/agent-zero"。
 
-## 3. Set up Conda environment
-- Now that we have the project files and Conda, we can create **virtual Python environment** for this project, activate it and install requirements.
+## 3. 设置 Conda 环境
+- 现在我们有了项目文件和 Conda，我们可以为此项目创建**虚拟 Python 环境**，激活它并安装要求。
 
-1. Open your **"Anaconda Powershell Prompt"** application on windows or **"Terminal"** application on macOS.
-2. In the terminal, navigate to your Agent Zero folder using **"cd"** command. Replace the path with your actual Agent Zero folder path.
+1. 在 Windows 上打开**"Anaconda Powershell Prompt"**应用程序或在 macOS 上打开**"Terminal"**应用程序。
+2. 在终端中，使用**"cd"**命令导航到您的 Agent Zero 文件夹。将路径替换为您的实际 Agent Zero 文件夹路径。
 ~~~
 cd C:\Users\frdel\Desktop\agent-zero
 ~~~
-You should see your folder has changed on the next terminal line.
+您应该看到下一行终端中的文件夹已更改。
 
 <img src="res/setup/image-15.png" alt="agent zero cd" height="100"/>
 <img src="res/setup/image-16.png" alt="agent zero cd" height="100"/>
 <br><br>
 
-3. Create Conda environment using command **"conda create"**. After **"-n"** is your environment name, you can choose your own, i will use **"a0"** - short for Agent Zero. After **"python"** is the Python version that Conda will install for you into this environment, right now, 3.12 works fine. **-y** skips confirmations.
+3. 使用命令**"conda create"**创建 Conda 环境。**"-n"**后面是您的环境名称，您可以选择自己的，我将使用**"a0"** - Agent Zero 的简称。**"python"**后面是 Conda 将为您安装到此环境中的 Python 版本，目前 3.12 运行良好。**-y**跳过确认。
 ~~~
 conda create -n a0 python=3.12 -y
 ~~~
 
-4. Once done, activate the new environment for this terminal window by another command:
+4. 完成后，通过另一个命令为此终端窗口激活新环境：
 ~~~
 conda activate a0
 ~~~
-And you should see that the **(base)** on the left has changed to **(a0)**. This means that this terminal now uses the new **a0** virtual environment and all packages will be installed into this environment.
+您应该看到左侧的**(base)**已更改为**(a0)**。这意味着此终端现在使用新的**a0**虚拟环境，所有包都将安装到此环境中。
 
 <img src="res/setup/image-17.png" alt="conda env" height="200"/>
 <img src="res/setup/image-18.png" alt="conda env" height="200"/>
 <br><br>
 
 > [!IMPORTANT]  
-> If you open a new terminal window, you will need to activate the environment with 
-> "conda activate a0" again for that window.
+> 如果您打开新的终端窗口，您需要再次使用
+> "conda activate a0"激活该窗口的环境。
 
-5. Install requirements using **"pip"**. Pip is a Python package manager. We can install all required packages from requirements.txt file using command:
+5. 使用**"pip"**安装要求。Pip 是 Python 包管理器。我们可以使用命令从 requirements.txt 文件安装所有必需的包：
 ~~~
 pip install -r requirements.txt
 ~~~
-This might take some time. If you get any errors regarding version conflicts and compatibility, double check that your environment is activated and that you created that environment with the correct Python version.
+这可能需要一些时间。如果您遇到有关版本冲突和兼容性的任何错误，请仔细检查您的环境是否已激活，以及您是否使用正确的 Python 版本创建了该环境。
 
 <img src="res/setup/image-19.png" alt="conda reqs" height="200"/>
 <br><br>
 
-## 4. Install Docker (Docker Desktop application)
-Simply put, Docker is a way of running virtual computers on your machine. These are lightweight, disposable and isolated from your operating system, so it is a way to sandbox Agent Zero.
-- Agent Zero only connects to the Docker container when it needs to execute code and commands. The frameworks itself runs on your machine.
-- Docker has a desktop application with GUI for all major operating system, which is the recommended way to install it.
+## 4. 安装 Docker（Docker Desktop 应用程序）
+简单来说，Docker 是一种在您的机器上运行虚拟计算机的方式。这些是轻量级的、可丢弃的，并且与您的操作系统隔离，因此它是沙盒化 Agent Zero 的一种方式。
+- Agent Zero 仅在需要执行代码和命令时连接到 Docker 容器。框架本身在您的机器上运行。
+- Docker 有一个适用于所有主要操作系统的带 GUI 的桌面应用程序，这是推荐的安装方式。
 
-1. Go to the download page of Docker Desktop [here](https://www.docker.com/products/docker-desktop/). If the link does not work, just search the web for "docker desktop download".
-2. Download the version for your operating system. Don't be tricked by the seemingly missing windows intel/amd version, it's the button itself, not in the dropdown menu.
+1. 访问 Docker Desktop 下载页面[这里](https://www.docker.com/products/docker-desktop/)。如果链接无效，只需在网络上搜索"docker desktop download"。
+2. 下载适用于您操作系统的版本。不要被看似缺少的 Windows intel/amd 版本所迷惑，它就是按钮本身，而不是在下拉菜单中。
 
 <img src="res/setup/image-8.png" alt="docker download" width="200"/>
 <br><br>
 
-3. Run the installer and go through the installation process. It should be even shorter than Conda installation, you can leave everything to default. On macOS, the installer is a "dmg" image, so just drag and drop the application to your Applications folder like always.
+3. 运行安装程序并完成安装过程。它应该比 Conda 安装更短，您可以保留所有默认设置。在 macOS 上，安装程序是一个"dmg"镜像，所以只需像往常一样将应用程序拖放到 Applications 文件夹。
 
 <img src="res/setup/image-9.png" alt="docker install" width="300"/>
 <img src="res/setup/image-10.png" alt="docker install" width="300"/>
@@ -474,44 +466,42 @@ Simply put, Docker is a way of running virtual computers on your machine. These 
 <img src="res/setup/image-12.png" alt="docker install" width="300"/>
 <br><br>
 
-
-4. Once installed, you should see Docker Desktop application on your Windows/Mac machine. 
+4. 安装完成后，您应该看到 Windows/Mac 机器上的 Docker Desktop 应用程序。
 
 <img src="res/setup/image-11.png" alt="docker installed" height="100"/>
 <img src="res/setup/image-13.png" alt="docker installed" height="100"/>
 <br><br>
 
-5. Create account in the application.
-- It's required to be signed in to the Docker Hub, so create a free account in the Docker Desktop application, you will be prompted when the application first runs.
+5. 在应用程序中创建账户。
+- 需要登录到 Docker Hub，所以在 Docker Desktop 应用程序中创建一个免费账户，当应用程序首次运行时您会被提示。
 
 > [!IMPORTANT]  
-> **Important macOS-only Docker Configuration:** In Docker Desktop's preferences 
-> (Docker menu) go to Settings, navigate to "Advanced" and check "Allow the default 
-> Docker socket to be used (requires password)."  This allows Agent Zero to 
-> communicate with the Docker daemon.
+> **仅限 macOS 的重要 Docker 配置：** 在 Docker Desktop 的偏好设置
+> （Docker 菜单）中转到设置，导航到"高级"并勾选"允许使用默认
+> Docker socket（需要密码）。"这允许 Agent Zero 与 Docker 守护进程通信。
 
 ![docker socket macOS](res/setup/macsocket.png)
 
 > [!NOTE]
-> **Linux Users:** You can install both Docker Desktop or docker-ce (Community Edition). 
-> For Docker Desktop, follow the instructions for your specific Linux distribution [here](https://docs.docker.com/desktop/install/linux-install/). 
-> For docker-ce, follow the instructions [here](https://docs.docker.com/engine/install/).
+> **Linux 用户：** 您可以安装 Docker Desktop 或 docker-ce（社区版）。
+> 对于 Docker Desktop，请按照[这里](https://docs.docker.com/desktop/install/linux-install/)针对您特定 Linux 发行版的说明进行操作。
+> 对于 docker-ce，请按照[这里](https://docs.docker.com/engine/install/)的说明进行操作。
 >
-> If you're using docker-ce, you will need to add your user to the `docker` group to be able to run docker commands without sudo. You can do this by running the following command in your terminal: `sudo usermod -aG docker $USER`. Then log out and log back in for the changes to take effect.
+> 如果您使用 docker-ce，您需要将用户添加到 `docker` 组才能在不使用 sudo 的情况下运行 docker 命令。您可以通过在终端中运行以下命令来执行此操作：`sudo usermod -aG docker $USER`。然后注销并重新登录以使更改生效。
 >
-> Login in the Docker CLI with `docker login` and provide your Docker Hub credentials.
+> 使用 `docker login` 登录 Docker CLI 并提供您的 Docker Hub 凭据。
 
-6. Pull the Docker image
-- Agent Zero needs a Docker image to be pulled from the Docker Hub to be run, even when using the full binaries.
-You can refer to the [installation instructions above](#windows-macos-and-linux-setup-guide) to run the Docker container and then resume from the next step. There are two differences:
-  - You need to map two ports instead of one:
-    - 55022 in the first field to run the Remote Function Call SSH
-    - 0 in the second field to run the Web UI in automatic port assignment
-  - You need to map the `/a0` volume to the location of your local Agent Zero folder.
-- Run the Docker container following the instructions.
+6. 拉取 Docker 镜像
+- Agent Zero 需要从 Docker Hub 拉取 Docker 镜像才能运行，即使使用完整二进制文件也是如此。
+您可以参考[上述安装说明](#windows-macos-and-linux-setup-guide)来运行 Docker 容器，然后从下一步继续。有两个区别：
+  - 您需要映射两个端口而不是一个：
+    - 第一个字段中的 55022 用于运行远程函数调用 SSH
+    - 第二个字段中的 0 用于在自动端口分配中运行 Web UI
+  - 您需要将 `/a0` 卷映射到本地 Agent Zero 文件夹的位置。
+- 按照说明运行 Docker 容器。
 
-## 5. Run the local Agent Zero instance
-Run the Agent Zero with Web UI:
+## 5. 运行本地 Agent Zero 实例
+运行带 Web UI 的 Agent Zero：
 ~~~
 python run_ui.py
 ~~~
@@ -519,36 +509,35 @@ python run_ui.py
 <img src="res/setup/image-21.png" alt="run ui" height="110"/>
 <br><br>
 
-- Open the URL shown in terminal in your web browser. You should see the Agent Zero interface.
+- 在 Web 浏览器中打开终端中显示的 URL。您应该看到 Agent Zero 界面。
 
-## 6. Configure Agent Zero
-Now we can configure Agent Zero - select models, settings, API Keys etc. Refer to the [Usage](usage.md#agent-configuration) guide for a full guide on how to configure Agent Zero.
+## 6. 配置 Agent Zero
+现在我们可以配置 Agent Zero - 选择模型、设置、API 密钥等。请参考[使用](usage.md#agent-configuration)指南了解如何配置 Agent Zero 的完整指南。
 
-## 7. Configure Agent Zero RFC
-Agent Zero needs to be configured further to redirect some functions to the Docker container. This is crucial for development as A0 needs to run in a standardized environment to support all features.
-1. Go in "Settings" page in the Web UI of your local instance and go in the "Development" section.
-2. Set "RFC Destination URL" to `http://localhost`
-3. Set the two ports (HTTP and SSH) to the ones used when creating the Docker container
-4. Click "Save"
+## 7. 配置 Agent Zero RFC
+Agent Zero 需要进一步配置以将某些函数重定向到 Docker 容器。这对于开发至关重要，因为 A0 需要在标准化环境中运行以支持所有功能。
+1. 在本地实例的 Web UI 中进入"Settings"页面，然后进入"Development"部分。
+2. 将"RFC Destination URL"设置为 `http://localhost`
+3. 将两个端口（HTTP 和 SSH）设置为创建 Docker 容器时使用的端口
+4. 点击"Save"
 
 ![rfc local settings](res/setup/9-rfc-devpage-on-local-sbs-1.png)
 
-5. Go in "Settings" page in the Web UI of your Docker instance and go in the "Development" section.
+5. 在 Docker 实例的 Web UI 中进入"Settings"页面，然后进入"Development"部分。
 
 ![rfc docker settings](res/setup/9-rfc-devpage-on-docker-instance-1.png)
 
-6. This time the page has only the password field, set it to the same password you used when creating the Docker container.
-7. Click "Save"
-8. Use the Development environment
-9. Now you have the full development environment to work on Agent Zero.
+6. 这次页面只有密码字段，将其设置为创建 Docker 容器时使用的相同密码。
+7. 点击"Save"
+8. 使用开发环境
+9. 现在您有了完整的开发环境来开发 Agent Zero。
 
 <img src="res/setup/image-22-1.png" alt="run ui" width="400"/>
 <img src="res/setup/image-23-1.png" alt="run ui" width="400"/>
 <br><br>
 
-      
-### Conclusion
-After following the instructions for your specific operating system, you should have Agent Zero successfully installed and running. You can now start exploring the framework's capabilities and experimenting with creating your own intelligent agents. 
+### 结论
+按照针对您特定操作系统的说明操作后，您应该成功安装并运行 Agent Zero。现在您可以开始探索框架的功能并尝试创建自己的智能代理。
 
-If you encounter any issues during the installation process, please consult the [Troubleshooting section](troubleshooting.md) of this documentation or refer to the Agent Zero [Skool](https://www.skool.com/agent-zero) or [Discord](https://discord.gg/Z2tun2N3) community for assistance.
+如果在安装过程中遇到任何问题，请查阅本文档的[故障排除部分](troubleshooting.md)或参考 Agent Zero [Skool](https://www.skool.com/agent-zero) 或 [Discord](https://discord.gg/Z2tun2N3) 社区获取帮助。
 

@@ -1,254 +1,253 @@
-# Usage Guide
-This guide explores usage and configuration scenarios for Agent Zero. You can consider this as a reference post-installation guide.
+# 使用指南
+本指南探讨了 Agent Zero 的使用和配置场景。您可以将其视为安装后的参考指南。
 
-![Utility Message with Solutions](res/memory-man.png)
+![实用消息与解决方案](res/memory-man.png)
 
-## Basic Operations
-Agent Zero provides several basic operations through its interface:
+## 基本操作
+Agent Zero 通过其界面提供多种基本操作：
 
-### Restart Framework
-The Restart button allows you to quickly restart the Agent Zero framework without using the terminal:
+### 重启框架
+重启按钮允许您快速重启 Agent Zero 框架，无需使用终端：
 
-![Restart Framework](res/ui-restarting.png)
+![重启框架](res/ui-restarting.png)
 
-* Click the "Restart" button in the sidebar
-* A blue notification will appear indicating "Restarting..."
-* Once complete, a green success message "Restarted" will be shown
-* The framework will reinitialize while maintaining your current chat history and context
-
-> [!TIP]
-> Use the Restart function when you want to:
-> - Reset the framework if you encounter unexpected behavior
-> - Reinitialize the system when agents become unresponsive
-
-### Action Buttons
-Located beneath the chat input box, Agent Zero provides a set of action buttons for enhanced control and visibility:
-
-![Action Buttons](res/ui-actions.png)
-#### Chat Flow Control
-* **Pause/Resume Agent:** Toggle button to pause and resume chat flow
-  - Click to pause ongoing agent operations
-  - Changes to "Resume Agent" when paused
-  - Click again to resume chat flow and command execution
-
-#### Knowledge and File Management
-* **Import Knowledge:** Import external files into the agent's knowledge base
-  - Supports `.txt`, `.pdf`, `.csv`, `.html`, `.json`, and `.md` formats
-  - Files are stored in `\knowledge\custom\main`
-  - Success message confirms successful import
-  - See [knowledge](architecture.md#knowledge) for more details
-
-### File Browser: Manage files in the Agent Zero environment
-  - Upload new files and folders
-  - Download files (click filename) or folders (as zip archives)
-  - Delete files and folders
-  - Navigate directories using the "Up" button
-  - Support for file renaming and search coming soon
-  - See [File Browser](#file-browser) section for detailed features
-
-#### Debugging and Monitoring
-* **Context:** View the complete context window sent to the LLM
-  - Includes system prompts
-  - Shows current conversation context
-  - Displays active instructions and parameters
-
-![Context](res/ui-context.png)
-
-### History: 
-Access the chat history in JSON format
-  - View the conversation as processed by the LLM
-  - Useful for debugging and understanding agent behavior
-
-![History](res/ui-history.png)
-
-* **Nudge:** Restart the agent's last process
-  - Useful when agents become unresponsive
-  - Retries the last operation
-  - Helps recover from stuck states
-
-![Nudge](res/ui-nudge.png)
+* 点击侧边栏中的"重启"按钮
+* 将出现蓝色通知，显示"正在重启..."
+* 完成后，将显示绿色成功消息"已重启"
+* 框架将重新初始化，同时保持您当前的聊天历史和上下文
 
 > [!TIP]
-> Use the Context and History buttons to understand how the agent interprets your instructions and debug any unexpected behavior.
+> 在以下情况下使用重启功能：
+> - 当您遇到意外行为时重置框架
+> - 当代理无响应时重新初始化系统
 
-### File Attachments
-Agent Zero supports direct file attachments in the chat interface for seamless file operations:
+### 操作按钮
+位于聊天输入框下方，Agent Zero 提供了一组操作按钮，用于增强控制和可见性：
 
-#### Attaching Files
-* Click the attachment icon (📎) on the left side of the chat input box
-* Select one or multiple files to attach
-* Preview attached files before sending:
-  - File names are displayed with their types (HTML, PDF, JPG, etc.)
-  - Images show thumbnails when available
-  - Files are listed in the chat input area waiting to be sent
+![操作按钮](res/ui-actions.png)
+#### 聊天流程控制
+* **暂停/恢复代理：** 切换按钮用于暂停和恢复聊天流程
+  - 点击暂停正在进行的代理操作
+  - 暂停时变为"恢复代理"
+  - 再次点击恢复聊天流程和命令执行
 
-![File Attachments](res/ui-attachments.png)
+#### 知识和文件管理
+* **导入知识：** 将外部文件导入到代理的知识库中
+  - 支持 `.txt`、`.pdf`、`.csv`、`.html`、`.json` 和 `.md` 格式
+  - 文件存储在 `\knowledge\custom\main` 中
+  - 成功消息确认导入成功
+  - 有关更多详细信息，请参见[知识](architecture.md#knowledge)
 
-#### Working with Attached Files
-* Files can be referenced directly in your messages
-* Agent Zero can:
-  - Process attached files
-  - Move files to specific directories
-  - Perform operations on multiple files simultaneously
-  - Confirm successful file operations with detailed responses
+### 文件浏览器：管理 Agent Zero 环境中的文件
+  - 上传新文件和文件夹
+  - 下载文件（点击文件名）或文件夹（作为 zip 存档）
+  - 删除文件和文件夹
+  - 使用"向上"按钮导航目录
+  - 文件重命名和搜索功能即将推出
+  - 有关详细功能，请参见[文件浏览器](#file-browser)部分
 
-![Working with Attachments](res/ui-attachments-2.png)
+#### 调试和监控
+* **上下文：** 查看发送给 LLM 的完整上下文窗口
+  - 包括系统提示
+  - 显示当前对话上下文
+  - 显示活动指令和参数
+
+![上下文](res/ui-context.png)
+
+### 历史记录：
+以 JSON 格式访问聊天历史
+  - 查看 LLM 处理的对话
+  - 对调试和理解代理行为很有用
+
+![历史记录](res/ui-history.png)
+
+* **提示：** 重启代理的最后一个进程
+  - 当代理无响应时很有用
+  - 重试最后一个操作
+  - 帮助从卡住状态恢复
+
+![提示](res/ui-nudge.png)
 
 > [!TIP]
-> When working with multiple files, you can attach them all at once and then give instructions about what to do with them. The agent will handle them as a batch while keeping you informed of the progress.
+> 使用上下文和历史记录按钮来了解代理如何解释您的指令并调试任何意外行为。
 
-## Tool Usage
-Agent Zero's power comes from its ability to use [tools](architecture.md#tools). Here's how to leverage them effectively:
+### 文件附件
+Agent Zero 支持在聊天界面中直接附加文件，实现无缝的文件操作：
 
-- **Understand Tools:** Agent Zero includes default tools like knowledge (powered by SearXNG), webpage content, code execution, and communication. Understand the capabilities of these tools and how to invoke them.
+#### 附加文件
+* 点击聊天输入框左侧的附件图标（📎）
+* 选择一个或多个文件进行附加
+* 发送前预览附加的文件：
+  - 显示文件名及其类型（HTML、PDF、JPG 等）
+  - 图片在可用时显示缩略图
+  - 文件列在聊天输入区域等待发送
 
-## Example of Tools Usage: Web Search and Code Execution
-Let's say you want Agent Zero to perform some financial analysis tasks. Here's a possible prompt:
+![文件附件](res/ui-attachments.png)
 
-> Please be a professional financial analyst. Find last month Bitcoin/ USD price trend and make a chart in your environment. The chart must  have highlighted key points corresponding with dates of major news  about cryptocurrency. Use the 'knowledge_tool' to find the price and  the news, and the 'code_execution_tool' to perform the rest of the job.
+#### 处理附加文件
+* 可以在消息中直接引用文件
+* Agent Zero 可以：
+  - 处理附加的文件
+  - 将文件移动到特定目录
+  - 同时执行多个文件的操作
+  - 通过详细响应确认成功的文件操作
 
-Agent Zero might then:
+![处理附件](res/ui-attachments-2.png)
 
-1. Use the `knowledge_tool` to query a reliable source for the Bitcoin price and for the news about cryptocurrency as prompted.
-2. Extract the price from the search results and save the news, extracting their dates and possible impact on the price.
-3. Use the `code_execution_tool` to execute a Python script that performs the graph creation and key points highlighting, using the extracted data and the news dates as inputs.
-4. Return the final chart that you'll find in `/work_dir`, responding to the user with the `response_tool`.
+> [!TIP]
+> 处理多个文件时，您可以一次性附加所有文件，然后给出如何处理它们的指令。代理将批量处理它们，同时让您了解进度。
+
+## 工具使用
+Agent Zero 的强大之处在于其使用[工具](architecture.md#tools)的能力。以下是如何有效利用它们：
+
+- **了解工具：** Agent Zero 包含默认工具，如知识（由 SearXNG 提供支持）、网页内容、代码执行和通信。了解这些工具的功能以及如何调用它们。
+
+## 工具使用示例：网络搜索和代码执行
+假设您希望 Agent Zero 执行一些金融分析任务。以下是一个可能的提示：
+
+> 请作为专业金融分析师。查找上个月比特币/美元价格趋势，并在您的环境中制作图表。图表必须突出显示与加密货币重大新闻日期相对应的关键点。使用 'knowledge_tool' 查找价格和新闻，使用 'code_execution_tool' 执行其余工作。
+
+Agent Zero 可能会：
+
+1. 使用 `knowledge_tool` 查询可靠来源获取比特币价格和加密货币新闻。
+2. 从搜索结果中提取价格并保存新闻，提取其日期和可能对价格的影响。
+3. 使用 `code_execution_tool` 执行 Python 脚本，创建图表并突出显示关键点，使用提取的数据和新闻日期作为输入。
+4. 返回最终图表，您可以在 `/work_dir` 中找到，并使用 `response_tool` 响应用户。
 
 > [!NOTE]
-> The first run of `code_execution_tool` may take a while as it downloads and builds the Agent Zero Docker image. Subsequent runs will be faster.
+> `code_execution_tool` 的首次运行可能需要一些时间，因为它会下载并构建 Agent Zero Docker 镜像。后续运行会更快。
 
-This example demonstrates how to combine multiple tools to achieve an analysis task. By mastering prompt engineering and tool usage, you can unlock the full potential of Agent Zero to solve complex problems.
+这个示例展示了如何组合多个工具来完成分析任务。通过掌握提示工程和工具使用，您可以解锁 Agent Zero 的全部潜力来解决复杂问题。
 
-## Multi-Agent Cooperation
-One of Agent Zero's unique features is multi-agent cooperation.
+## 多代理协作
+Agent Zero 的独特功能之一是多代理协作。
 
-* **Creating Sub-Agents:** Agents can create sub-agents to delegate sub-tasks.  This helps manage complexity and distribute workload.
-* **Communication:** Agents can communicate with each other, sharing information and coordinating actions. The system prompt and message history play a key role in guiding this communication.
-* **Hierarchy:** Agent Zero uses a [hierarchical structure](architecture.md#agent-hierarchy-and-communication), with superior agents delegating tasks to subordinates.  This allows for structured problem-solving and efficient resource allocation.
+* **创建子代理：** 代理可以创建子代理来委派子任务。这有助于管理复杂性和分配工作负载。
+* **通信：** 代理可以相互通信，共享信息和协调行动。系统提示和消息历史在指导这种通信中起着关键作用。
+* **层次结构：** Agent Zero 使用[层次结构](architecture.md#agent-hierarchy-and-communication)，上级代理将任务委派给下级。这允许结构化问题解决和高效资源分配。
 
 ![](res/physics.png)
 ![](res/physics-2.png)
 
-## Prompt Engineering
-Effective prompt engineering is crucial for getting the most out of Agent Zero. Here are some tips and techniques:
+## 提示工程
+有效的提示工程对于充分利用 Agent Zero 至关重要。以下是一些技巧和技术：
 
-* **Be Clear and Specific:** Clearly state your desired outcome.  The more specific you are, the better Agent Zero can understand and fulfill your request.  Avoid vague or ambiguous language.
-* **Provide Context:** If necessary, provide background information or context to help the agent understand the task better. This might include relevant details, constraints, or desired format for the response.
-* **Break Down Complex Tasks:**  For complex tasks, break them down into smaller, more manageable sub-tasks.  This makes it easier for the agent to reason through the problem and generate a solution.
-* **Iterative Refinement:** Don't expect perfect results on the first try.  Experiment with different prompts, refine your instructions based on the agent's responses, and iterate until you achieve the desired outcome. To achieve a full-stack, web-app development task, for example, you might need to iterate for a few hours for 100% success.
+* **清晰具体：** 明确说明您期望的结果。您越具体，Agent Zero 就越能理解和满足您的要求。避免模糊或歧义的语言。
+* **提供上下文：** 如有必要，提供背景信息或上下文以帮助代理更好地理解任务。这可能包括相关细节、约束或期望的响应格式。
+* **分解复杂任务：** 对于复杂任务，将其分解为更小、更易于管理的子任务。这使代理更容易推理问题并生成解决方案。
+* **迭代优化：** 不要期望第一次尝试就能得到完美结果。尝试不同的提示，根据代理的响应优化您的指令，并迭代直到达到预期结果。例如，要完成一个全栈 Web 应用开发任务，您可能需要迭代几个小时才能获得 100% 的成功。
 
-## Voice Interface
-Agent Zero provides both Text-to-Speech (TTS) and Speech-to-Text (STT) capabilities for natural voice interaction:
+## 语音界面
+Agent Zero 提供文本到语音（TTS）和语音到文本（STT）功能，实现自然的语音交互：
 
-### Text-to-Speech
-Enable voice responses from agents:
-* Toggle the "Speech" switch in the Preferences section of the sidebar
-* Agents will use your system's built-in voice synthesizer to speak their messages
-* Click the "Stop Speech" button above the input area to immediately stop any ongoing speech
+### 文本到语音
+启用代理的语音响应：
+* 在侧边栏的偏好设置部分切换"语音"开关
+* 代理将使用您系统的内置语音合成器来朗读消息
+* 点击输入区域上方的"停止语音"按钮立即停止任何正在进行的语音
 
-![TTS Stop Speech](res/ui-tts-stop-speech.png)
+![TTS 停止语音](res/ui-tts-stop-speech.png)
 
-- The interface allows users to stop speech at any time if a response is too lengthy or if they wish to intervene during the conversation.
+- 界面允许用户随时停止语音，如果响应太长或他们希望在对话过程中干预。
 
-The TTS uses a standard voice interface provided by modern browsers, which may sound robotic but is effective and does not require complex AI models. This ensures low latency and quick responses across various platforms, including mobile devices.
-
+TTS 使用现代浏览器提供的标准语音界面，可能听起来有些机械，但效果很好，不需要复杂的 AI 模型。这确保了在各种平台（包括移动设备）上的低延迟和快速响应。
 
 > [!TIP]
-> The Text-to-Speech feature is great for:
-> - Multitasking while receiving agent responses
-> - Accessibility purposes
-> - Creating a more interactive experience
+> 文本到语音功能非常适合：
+> - 在接收代理响应时进行多任务处理
+> - 辅助功能目的
+> - 创造更具互动性的体验
 
-### Speech-to-Text
-Send voice messages to agents using OpenAI's Whisper model (does not require OpenAI API key!):
+### 语音到文本
+使用 OpenAI 的 Whisper 模型向代理发送语音消息（不需要 OpenAI API 密钥！）：
 
-1. Click the microphone button in the input area to start recording
-2. The button color indicates the current status:
-   - Grey: Inactive
-   - Red: Listening
-   - Green: Recording
-   - Teal: Waiting
-   - Cyan (pulsing): Processing
+1. 点击输入区域中的麦克风按钮开始录音
+2. 按钮颜色指示当前状态：
+   - 灰色：未激活
+   - 红色：正在监听
+   - 绿色：正在录音
+   - 青色：等待中
+   - 青色（脉冲）：处理中
 
-Users can adjust settings such as silence threshold and message duration before sending to optimize their interaction experience.
+用户可以调整设置，如静音阈值和发送前的消息持续时间，以优化他们的交互体验。
 
-Configure STT settings in the Settings page:
-* **Model Size:** Choose between Base (74M, English) or other models
-  - Note: Only Large and Turbo models support multiple languages
-* **Language Code:** Set your preferred language (e.g., 'en', 'fr', 'it', 'cz')
-* **Silence Detection:**
-  - Threshold: Adjust sensitivity (lower values are more sensitive)
-  - Duration: Set how long silence should last before ending recording
-  - Timeout: Set maximum waiting time before closing the microphone
+在设置页面配置 STT 设置：
+* **模型大小：** 在 Base（74M，英语）或其他模型之间选择
+  - 注意：只有 Large 和 Turbo 模型支持多种语言
+* **语言代码：** 设置您首选的语言（例如，'en'、'fr'、'it'、'cz'）
+* **静音检测：**
+  - 阈值：调整灵敏度（较低的值更敏感）
+  - 持续时间：设置静音应该持续多长时间才结束录音
+  - 超时：设置关闭麦克风前的最大等待时间
 
-![Speech to Text Settings](res/ui-settings-5-speech-to-text.png)
+![语音到文本设置](res/ui-settings-5-speech-to-text.png)
 
 > [!IMPORTANT]
-> All STT and TTS functionalities operate locally within the Docker container, 
-> ensuring that no data is transmitted to external servers or OpenAI APIs. This 
-> enhances user privacy while maintaining functionality.
+> 所有 STT 和 TTS 功能都在 Docker 容器内本地运行，
+> 确保不会将数据传输到外部服务器或 OpenAI API。这
+> 在保持功能的同时增强了用户隐私。
 
-### Mathematical Expressions
-Agent Zero supports KaTeX for beautiful mathematical typesetting:
+### 数学表达式
+Agent Zero 支持 KaTeX 进行美观的数学排版：
 
-* **Inline Math:** Use single dollars `$...$` for inline expressions
-  - Example: Type `The area of a circle is $A = πr^2$`
-  - Renders as: The area of a circle is $A = πr^2$
+* **行内数学：** 使用单美元符号 `$...$` 表示行内表达式
+  - 示例：输入 `圆的面积是 $A = πr^2$`
+  - 渲染为：圆的面积是 $A = πr^2$
 
-* **Display Math:** Use double dollars `$$...$$` for centered display equations
-  - Example: Type `$$F = G\frac{m_1m_2}{r^2}$$`
-  - Renders as a centered equation
+* **显示数学：** 使用双美元符号 `$$...$$` 表示居中的显示方程
+  - 示例：输入 `$$F = G\frac{m_1m_2}{r^2}$$`
+  - 渲染为居中的方程
 
 ![KaTeX](res/ui-katex-1.png)
 
-* **Complex Mathematics:** Supports full KaTeX syntax for:
-  - Fractions, exponents, and roots
-  - Matrices and arrays
-  - Greek letters and mathematical symbols
-  - Integrals, summations, and limits
-  - Mathematical alignments and equations
+* **复杂数学：** 支持完整的 KaTeX 语法，包括：
+  - 分数、指数和根号
+  - 矩阵和数组
+  - 希腊字母和数学符号
+  - 积分、求和和极限
+  - 数学对齐和方程
 
-![KaTeX display](res/ui-katex-2.png)
+![KaTeX 显示](res/ui-katex-2.png)
 
 > [!TIP]
-> When asking the agent to solve mathematical problems, it will automatically respond using KaTeX formatting for clear and professional-looking mathematical expressions.
+> 当要求代理解决数学问题时，它将自动使用 KaTeX 格式进行响应，以提供清晰且专业的数学表达式。
 
-### File Browser
-Agent Zero provides a powerful file browser interface for managing your workspace:
+### 文件浏览器
+Agent Zero 提供强大的文件浏览器界面来管理工作空间：
 
-#### Interface Overview
-- **Navigation Bar**: Shows current directory path with "Up" button for parent directory
-- **File List**: Displays files and directories with key information:
-  - Name (sortable)
-  - Size in bytes
-  - Last modified timestamp
-- **Action Icons**: Each file/directory has:
-  - Download button
-  - Delete button (with confirmation)
+#### 界面概述
+- **导航栏**：显示当前目录路径，带有"向上"按钮用于父目录
+- **文件列表**：显示文件和目录的关键信息：
+  - 名称（可排序）
+  - 大小（字节）
+  - 最后修改时间戳
+- **操作图标**：每个文件/目录都有：
+  - 下载按钮
+  - 删除按钮（带确认）
 
-![File Browser](res/ui-file-browser.png)
+![文件浏览器](res/ui-file-browser.png)
 
-#### Features
-- **Directory Navigation**: 
-  - Click directories to enter them
-  - Use "Up" button to move to parent directory
-  - Current path always visible for context
+#### 功能
+- **目录导航**：
+  - 点击目录进入
+  - 使用"向上"按钮移动到父目录
+  - 始终可见当前路径以提供上下文
 
 > [!NOTE]
-> The files browser allows the user to go in the Agent Zero root folder if you click the `Up` button, but the working directory of Agents will always be `/work_dir`
+> 文件浏览器允许用户通过点击 `Up` 按钮进入 Agent Zero 根文件夹，但代理的工作目录将始终是 `/work_dir`
 > 
-- **File Operations**:
-  - Create new files and directories
-  - Delete existing files and directories
-  - Download files to your local system
-  - Upload files from your local system
-- **File Information**:
-  - Visual indicators for file types (folders, code files, documents)
-  - Size information in human-readable format
-  - Last modification timestamps
-- **Bulk Operations**:
-  - Upload multiple files simultaneously
-  - Select and manage multiple files at once
+- **文件操作**：
+  - 创建新文件和目录
+  - 删除现有文件和目录
+  - 下载文件到本地系统
+  - 从本地系统上传文件
+- **文件信息**：
+  - 文件类型的视觉指示器（文件夹、代码文件、文档）
+  - 人类可读格式的大小信息
+  - 最后修改时间戳
+- **批量操作**：
+  - 同时上传多个文件
+  - 一次选择和管理多个文件
 
 > [!TIP]
-> The File Browser integrates seamlessly with Agent Zero's capabilities. You can reference files directly in your conversations, and the agent can help you manage, modify, and organize your files.
+> 文件浏览器与 Agent Zero 的功能无缝集成。您可以在对话中直接引用文件，代理可以帮助您管理、修改和组织文件。

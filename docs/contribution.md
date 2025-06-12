@@ -1,27 +1,27 @@
-# Contributing to Agent Zero
+# 为 Agent Zero 做出贡献
 
-Contributions to improve Agent Zero are very welcome!  This guide outlines how to contribute code, documentation, or other improvements.
+非常欢迎为改进 Agent Zero 做出贡献！本指南概述了如何贡献代码、文档或其他改进。
 
-## Getting Started
+## 开始使用
 
-1. **Fork the Repository:** Fork the Agent Zero repository on GitHub.
-2. **Clone Your Fork:** Clone your forked repository to your local machine.
-3. **Create a Branch:** Create a new branch for your changes. Use a descriptive name that reflects the purpose of your contribution (e.g., `fix-memory-leak`, `add-search-tool`, `improve-docs`).
+1. **Fork 仓库：** 在 GitHub 上 Fork Agent Zero 仓库。
+2. **克隆你的 Fork：** 将你 Fork 的仓库克隆到本地机器。
+3. **创建分支：** 为你的更改创建一个新分支。使用描述性名称来反映你的贡献目的（例如，`fix-memory-leak`、`add-search-tool`、`improve-docs`）。
 
-## Making Changes
+## 进行更改
 
-* **Code Style:** Follow the existing code style. Agent Zero generally follows PEP 8 conventions.
-* **Documentation:**  Update the documentation if your changes affect user-facing functionality. The documentation is written in Markdown.
-* **Commit Messages:**  Write clear and concise commit messages that explain the purpose of your changes.
+* **代码风格：** 遵循现有的代码风格。Agent Zero 通常遵循 PEP 8 约定。
+* **文档：** 如果你的更改影响面向用户的功能，请更新文档。文档使用 Markdown 编写。
+* **提交信息：** 编写清晰简洁的提交信息，解释你的更改目的。
 
-## Submitting a Pull Request
+## 提交拉取请求
 
-1. **Push Your Branch:** Push your branch to your forked repository on GitHub.
-2. **Create a Pull Request:** Create a pull request from your branch to the appropriate branch in the main Agent Zero repository.
-   * Target the `development` branch.
-3. **Provide Details:** In your pull request description, clearly explain the purpose and scope of your changes. Include relevant context, test results, and any other information that might be helpful for reviewers.
-4. **Address Feedback:**  Be responsive to feedback from the community. We love changes, but we also love to discuss them!
+1. **推送你的分支：** 将你的分支推送到你在 GitHub 上的 Fork 仓库。
+2. **创建拉取请求：** 从你的分支创建拉取请求到主 Agent Zero 仓库的适当分支。
+   * 目标分支为 `development`。
+3. **提供详细信息：** 在你的拉取请求描述中，清楚地解释你的更改的目的和范围。包括相关上下文、测试结果和任何其他可能对审查者有帮助的信息。
+4. **处理反馈：** 积极响应社区的反馈。我们喜欢改变，但我们也喜欢讨论它们！
 
-## Documentation Stack
+## 文档栈
 
-- The documentation is built using Markdown. We appreciate your contributions even if you don't know Markdown, and look forward to improve Agent Zero for everyone's benefit.
+- 文档使用 Markdown 构建。即使你不了解 Markdown，我们也感谢你的贡献，并期待为每个人的利益改进 Agent Zero。

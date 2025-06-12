@@ -1,313 +1,312 @@
-# Architecture Overview
-Agent Zero is built on a flexible and modular architecture designed for extensibility and customization. This section outlines the key components and the interactions between them.
+# 架构概述
+Agent Zero 构建在一个灵活且模块化的架构上，专为可扩展性和可定制性而设计。本节概述了关键组件及其之间的交互。
 
-## System Architecture
-This simplified diagram illustrates the hierarchical relationship between agents and their interaction with tools, extensions, instruments, prompts, memory and knowledge base.
+## 系统架构
+这个简化图说明了代理之间的层次关系，以及它们与工具、扩展、工具集、提示、记忆和知识库的交互。
 
-![Agent Zero Architecture](res/arch-01.svg)
+![Agent Zero 架构](res/arch-01.svg)
 
-The user or Agent 0 is at the top of the hierarchy, delegating tasks to subordinate agents, which can further delegate to other agents. Each agent can utilize tools and access the shared assets (prompts, memory, knowledge, extensions and instruments) to perform its tasks.
+用户或 Agent 0 位于层次结构的顶部，将任务委派给下属代理，这些代理可以进一步委派给其他代理。每个代理都可以利用工具并访问共享资源（提示、记忆、知识、扩展和工具集）来执行其任务。
 
-## Runtime Architecture
-Agent Zero's runtime architecture is built around Docker containers:
+## 运行时架构
+Agent Zero 的运行时架构围绕 Docker 容器构建：
 
-1. **Host System (your machine)**:
-   - Requires only Docker and a web browser
-   - Runs Docker Desktop or Docker Engine
-   - Handles container orchestration
+1. **主机系统（您的机器）**：
+- 仅需要 Docker 和网页浏览器
+- 运行 Docker Desktop 或 Docker Engine
+- 处理容器编排
 
-2. **Runtime Container**:
-   - Houses the complete Agent Zero framework
-   - Manages the Web UI and API endpoints
-   - Handles all core functionalities including code execution
-   - Provides a standardized environment across all platforms
+2. **运行时容器**：
+- 包含完整的 Agent Zero 框架
+- 管理 Web UI 和 API 端点
+- 处理所有核心功能，包括代码执行
+- 在所有平台上提供标准化环境
 
-This architecture ensures:
-- Consistent environment across platforms
-- Simplified deployment and updates
-- Enhanced security through containerization
-- Reduced dependency requirements on host systems
-- Flexible deployment options for advanced users
+这种架构确保：
+- 跨平台环境一致性
+- 简化的部署和更新
+- 通过容器化增强安全性
+- 减少主机系统的依赖要求
+- 为高级用户提供灵活的部署选项
 
 > [!NOTE]
-> The legacy approach of running Agent Zero directly on the host system (using Python, Conda, etc.) 
-> is still possible but requires Remote Function Calling (RFC) configuration through the Settings 
-> page. See [Full Binaries Installation](installation.md#in-depth-guide-for-full-binaries-installation) 
-> for detailed instructions.
+> 在主机系统上直接运行 Agent Zero 的传统方法（使用 Python、Conda 等）
+> 仍然可行，但需要通过设置页面配置远程函数调用（RFC）。
+> 有关详细说明，请参见[完整二进制安装](installation.md#in-depth-guide-for-full-binaries-installation)。
 
-## Implementation Details
+## 实现细节
 
-### Directory Structure
-| Directory | Description |
+### 目录结构
+| 目录 | 描述 |
 | --- | --- |
-| `/docker` | Docker-related files for runtime container |
-| `/docs` | Documentation files and guides |
-| `/instruments` | Custom scripts and tools for runtime environment |
-| `/knowledge` | Knowledge base storage |
-| `/logs` | HTML CLI-style chat logs |
-| `/memory` | Persistent agent memory storage |
-| `/prompts` | System and tool prompts |
-| `/python` | Core Python codebase: |
-| `/api` | API endpoints and interfaces |
-| `/extensions` | Modular extensions |
-| `/helpers` | Utility functions |
-| `/tools` | Tool implementations |
-| `/tmp` | Temporary runtime data |
-| `/webui` | Web interface components: |
-| `/css` | Stylesheets |
-| `/js` | JavaScript modules |
-| `/public` | Static assets |
-| `/work_dir` | Working directory |
+| `/docker` | 运行时容器的 Docker 相关文件 |
+| `/docs` | 文档文件和指南 |
+| `/instruments` | 运行时环境的自定义脚本和工具 |
+| `/knowledge` | 知识库存储 |
+| `/logs` | HTML CLI 风格的聊天日志 |
+| `/memory` | 持久代理记忆存储 |
+| `/prompts` | 系统和工具提示 |
+| `/python` | 核心 Python 代码库： |
+| `/api` | API 端点和接口 |
+| `/extensions` | 模块化扩展 |
+| `/helpers` | 实用函数 |
+| `/tools` | 工具实现 |
+| `/tmp` | 临时运行时数据 |
+| `/webui` | Web 界面组件： |
+| `/css` | 样式表 |
+| `/js` | JavaScript 模块 |
+| `/public` | 静态资源 |
+| `/work_dir` | 工作目录 |
 
-### Key Files
-| File | Description |
+### 关键文件
+| 文件 | 描述 |
 | --- | --- |
-| `.env` | Environment configuration |
-| `agent.py` | Core agent implementation |
-| `example.env` | Configuration template |
-| `initialize.py` | Framework initialization |
-| `models.py` | Model providers and configs |
-| `preload.py` | Pre-initialization routines |
-| `prepare.py` | Environment preparation |
-| `requirements.txt` | Python dependencies |
-| `run_cli.py` | CLI launcher |
-| `run_ui.py` | Web UI launcher |
+| `.env` | 环境配置 |
+| `agent.py` | 核心代理实现 |
+| `example.env` | 配置模板 |
+| `initialize.py` | 框架初始化 |
+| `models.py` | 模型提供商和配置 |
+| `preload.py` | 预初始化例程 |
+| `prepare.py` | 环境准备 |
+| `requirements.txt` | Python 依赖 |
+| `run_cli.py` | CLI 启动器 |
+| `run_ui.py` | Web UI 启动器 |
 
 > [!NOTE]
-> When using the Docker runtime container, these directories are mounted 
-> within the `/a0` volume for data persistence until the container is restarted or deleted.
+> 使用 Docker 运行时容器时，这些目录被挂载在 `/a0` 卷中，
+> 以保持数据持久性，直到容器重启或删除。
 
-## Core Components
-Agent Zero's architecture revolves around the following key components:
+## 核心组件
+Agent Zero 的架构围绕以下关键组件：
 
-### 1. Agents
-The core actors within the framework. Agents receive instructions, reason, make decisions, and utilize tools to achieve their objectives. Agents operate within a hierarchical structure, with superior agents delegating tasks to subordinate agents.
+### 1. 代理
+框架中的核心执行者。代理接收指令、推理、做出决策，并利用工具来实现其目标。代理在层次结构中运行，上级代理将任务委派给下属代理。
 
-#### Agent Hierarchy and Communication
-Agent Zero employs a hierarchical agent structure, where a top-level agent (often the user) can delegate tasks to subordinate agents. This hierarchy allows for the efficient breakdown of complex tasks into smaller, more manageable sub-tasks.
+#### 代理层次结构和通信
+Agent Zero 采用层次代理结构，顶级代理（通常是用户）可以将任务委派给下属代理。这种层次结构允许将复杂任务高效地分解为更小、更易管理的子任务。
 
-Communication flows between agents through messages, which are structured according to the prompt templates. These messages typically include:
+代理之间通过消息进行通信，这些消息根据提示模板进行结构化。这些消息通常包括：
 
-| Argument | Description |
+| 参数 | 描述 |
 | --- | --- |
-| `Thoughts:` | The agent's Chain of Thought and planning process |
-| `Tool name:` | The specific tool used by the agent |
-| `Responses or queries:` | Results, feedback or queries from tools or other agents |
+| `Thoughts:` | 代理的思维链和规划过程 |
+| `Tool name:` | 代理使用的特定工具 |
+| `Responses or queries:` | 来自工具或其他代理的结果、反馈或查询 |
 
-#### Interaction Flow
-A typical interaction flow within Agent Zero might look like this:
+#### 交互流程
+Agent Zero 中的典型交互流程可能如下所示：
 
-![Interaction Flow](res/flow-01.svg)
+![交互流程](res/flow-01.svg)
 
-1. The user provides an instruction to Agent 0
-2. Agent 0 initializes VectorDB and access memory
-3. Agent 0 analyzes the instruction and formulates a plan using `thoughts` argument, possibly involving the use of tools or the creation of sub-agents
-4. If necessary, Agent 0 delegates sub-tasks to subordinate agents
-5. Agents use tools to perform actions, both providing arguments and responses or queries
-6. Agents communicate results and feedback back up the hierarchy
-7. Agent 0 provides the final response to the user
+1. 用户向 Agent 0 提供指令
+2. Agent 0 初始化 VectorDB 并访问记忆
+3. Agent 0 分析指令并使用 `thoughts` 参数制定计划，可能涉及使用工具或创建子代理
+4. 如有必要，Agent 0 将子任务委派给下属代理
+5. 代理使用工具执行操作，同时提供参数和响应或查询
+6. 代理将结果和反馈向上级层次报告
+7. Agent 0 向用户提供最终响应
 
-### 2. Tools
-Tools are functionalities that agents can leverage. These can include anything from web search and code execution to interacting with APIs or controlling external software. Agent Zero provides a mechanism for defining and integrating both built-in and custom tools.
+### 2. 工具
+工具是代理可以利用的功能。这些可以包括从网络搜索和代码执行到与 API 交互或控制外部软件的任何内容。Agent Zero 提供了定义和集成内置和自定义工具的机制。
 
-#### Built-in Tools
-Agent Zero comes with a set of built-in tools designed to help agents perform tasks efficiently:
+#### 内置工具
+Agent Zero 配备了一套内置工具，旨在帮助代理高效执行任务：
 
-| Tool | Function |
+| 工具 | 功能 |
 | --- | --- |
-| behavior_adjustment | Agent Zero use this tool to change its behavior according to a prior request from the user.
-| call_subordinate | Allows agents to delegate tasks to subordinate agents |
-| code_execution_tool | Allows agents to execute Python, Node.js, and Shell code in the terminal |
-| input | Allows agents to use the keyboard to interact with an active shell |
-| knowledge_tool | Enables agents to retrieve information from memory, knowledge base or online external sources |
-| response_tool | Allows agents to output a response |
-| memory_tool | Enables agents to save, load, delete and forget information from memory |
-| webpage_content_tool | Enables agents to fetch and analyze the text content of webpages |
+| behavior_adjustment | Agent Zero 使用此工具根据用户之前的请求改变其行为 |
+| call_subordinate | 允许代理将任务委派给下属代理 |
+| code_execution_tool | 允许代理在终端中执行 Python、Node.js 和 Shell 代码 |
+| input | 允许代理使用键盘与活动 shell 交互 |
+| knowledge_tool | 使代理能够从记忆、知识库或在线外部源检索信息 |
+| response_tool | 允许代理输出响应 |
+| memory_tool | 使代理能够保存、加载、删除和遗忘记忆中的信息 |
+| webpage_content_tool | 使代理能够获取和分析网页的文本内容 |
 
-#### Knowledge Tool
-The `knowledge_tool` uses SearXNG to search the web and retrieve information. It can also search the local knowledge base and memory for relevant information. The tool returns a summary of the information, which can be used by the agent to make decisions or answer questions.
+#### 知识工具
+`knowledge_tool` 使用 SearXNG 搜索网络并检索信息。它还可以搜索本地知识库和记忆以获取相关信息。该工具返回信息的摘要，代理可以用它来做出决策或回答问题。
 
-#### SearXNG Integration
-Agent Zero has integrated SearXNG as its primary search tool, replacing the previous knowledge tools (Perplexity and DuckDuckGo). This integration enhances the agent's ability to retrieve information while ensuring user privacy and customization.
+#### SearXNG 集成
+Agent Zero 已将 SearXNG 集成为其主要搜索工具，取代了以前的知识工具（Perplexity 和 DuckDuckGo）。这种集成增强了代理检索信息的能力，同时确保用户隐私和定制。
 
-- Privacy-Focused Search
-SearXNG is an open-source metasearch engine that allows users to search multiple sources without tracking their queries. This integration ensures that user data remains private and secure while accessing a wide range of information.
+- 注重隐私的搜索
+SearXNG 是一个开源元搜索引擎，允许用户搜索多个来源而不跟踪其查询。这种集成确保用户数据在访问广泛信息时保持私密和安全。
 
-- Enhanced Search Capabilities
-The integration provides access to various types of content, including images, videos, and news articles, allowing users to gather comprehensive information on any topic.
+- 增强的搜索能力
+该集成提供对各种类型内容的访问，包括图像、视频和新闻文章，允许用户收集任何主题的全面信息。
 
-- Fallback Mechanism
-In cases where SearXNG might not return satisfactory results, Agent Zero can be configured to fall back on other sources or methods, ensuring that users always have access to information.
-
-> [!NOTE]
-> The Knowledge Tool is designed to work seamlessly with both online searches through 
-> SearXNG and local knowledge base queries, providing a comprehensive information 
-> retrieval system.
-
-#### Custom Tools
-Users can create custom tools to extend Agent Zero's capabilities. Custom tools can be integrated into the framework by defining a tool specification, which includes the tool's prompt to be placed in `/prompts/$FOLDERNAME/agent.system.tool.$TOOLNAME.md`, as detailed below.
-
-1. Create `agent.system.tool.$TOOL_NAME.md` in `prompts/$SUBDIR`
-2. Add reference in `agent.system.tools.md`
-3. If needed, implement tool class in `python/tools` using `Tool` base class
-4. Follow existing patterns for consistency
+- 回退机制
+在 SearXNG 可能无法返回满意结果的情况下，Agent Zero 可以配置为回退到其他来源或方法，确保用户始终能够访问信息。
 
 > [!NOTE]
-> Tools are always present in system prompt, so you should keep them to minimum. 
-> To save yourself some tokens, use the [Instruments module](#adding-instruments) 
-> to call custom scripts or functions.
+> 知识工具设计为与通过 SearXNG 的在线搜索和本地知识库查询无缝协作，
+> 提供全面的信息检索系统。
 
-### 3. Memory System
-The memory system is a critical component of Agent Zero, enabling the agent to learn and adapt from past interactions. It operates on a hybrid model where part of the memory is managed automatically by the framework while users can also manually input and extract information.
+#### 自定义工具
+用户可以创建自定义工具来扩展 Agent Zero 的功能。自定义工具可以通过定义工具规范集成到框架中，包括要放置在 `/prompts/$FOLDERNAME/agent.system.tool.$TOOLNAME.md` 中的工具提示，如下所述。
 
-#### Memory Structure
-The memory is categorized into four distinct areas:
-- **Storage and retrieval** of user-provided information (e.g., names, API keys)
-- **Fragments**: Contains pieces of information from previous conversations, updated automatically
-- **Solutions**: Stores successful solutions from past interactions for future reference
-- **Metadata**: Each memory entry includes metadata (IDs, timestamps), enabling efficient filtering and searching based on specific criteria
-
-#### Messages History and Summarization
-
-Agent Zero employs a sophisticated message history and summarization system to maintain context effectively while optimizing memory usage. This system dynamically manages the information flow, ensuring relevant details are readily available while efficiently handling the constraints of context windows.
-
-- **Context Extraction:** The system identifies key information from previous messages that are vital for ongoing discussions. This process mirrors how humans recall important memories, allowing less critical details to fade.
-- **Summarization Process:** Using natural language processing through the utility model, Agent Zero condenses the extracted information into concise summaries. By summarizing past interactions, Agent Zero can quickly recall important facts about the whole chat, leading to more appropriate responses.
-- **Contextual Relevance:** The summarized context is prioritized based on its relevance to the current topic, ensuring users receive the most pertinent information.
-
-**Implementation Details:**
-
-- **Message Summaries**: Individual messages are summarized using a structured format that captures key information while reducing token usage.
-- **Dynamic Compression**: The system employs an intelligent compression strategy:
-  - Recent messages remain in their original form for immediate context.
-  - Older messages are gradually compressed into more concise summaries.
-  - Multiple compression levels allow for efficient context window usage.
-  - Original messages are preserved separately from summaries.
-- **Context Window Optimization**:
-  - Acts as a near-infinite short-term memory for single conversations.
-  - Dynamically adjusts compression ratios based on available space and settings.
-- **Bulk and Topic Summarization**:
-  - Groups related messages into thematic chunks for better organization.
-  - Generates concise summaries of multiple messages while preserving key context.
-  - Enables efficient navigation of long conversation histories.
-  - Maintains semantic connections between related topics.
-
-By dynamically adjusting context windows and summarizing past interactions, Agent Zero enhances both efficiency and user experience. This innovation not only reflects the framework's commitment to being dynamic and user-centric, but also draws inspiration from human cognitive processes, making AI interactions more relatable and effective. Just as humans forget trivial details, Agent Zero intelligently condenses information to enhance communication.
+1. 在 `prompts/$SUBDIR` 中创建 `agent.system.tool.$TOOL_NAME.md`
+2. 在 `agent.system.tools.md` 中添加引用
+3. 如果需要，在 `python/tools` 中使用 `Tool` 基类实现工具类
+4. 遵循现有模式以保持一致性
 
 > [!NOTE]
-> To maximize the effectiveness of context summarization, users should provide clear and specific instructions during interactions. This helps Agent Zero understand which details are most important to retain.
+> 工具始终存在于系统提示中，因此应将其保持在最低限度。
+> 为了节省一些 token，使用[工具集模块](#adding-instruments)
+> 来调用自定义脚本或函数。
 
-### 4. Prompts
-The `prompts` directory contains various Markdown files that control agent behavior and communication. The most important file is `agent.system.main.md`, which acts as a central hub, referencing other prompt files.
+### 3. 记忆系统
+记忆系统是 Agent Zero 的关键组件，使代理能够从过去的交互中学习和适应。它在混合模型上运行，其中部分记忆由框架自动管理，而用户也可以手动输入和提取信息。
 
-#### Core Prompt Files
-| Prompt File | Description |
+#### 记忆结构
+记忆分为四个不同的区域：
+- **存储和检索**用户提供的信息（例如，名称、API 密钥）
+- **片段**：包含来自先前对话的信息片段，自动更新
+- **解决方案**：存储来自过去交互的成功解决方案以供将来参考
+- **元数据**：每个记忆条目包括元数据（ID、时间戳），支持基于特定条件的高效过滤和搜索
+
+#### 消息历史和总结
+
+Agent Zero 采用复杂的消息历史和总结系统，以有效维护上下文，同时优化内存使用。该系统动态管理信息流，确保相关细节随时可用，同时高效处理上下文窗口的限制。
+
+- **上下文提取：** 系统从先前的消息中识别对正在进行的讨论至关重要的关键信息。这个过程反映了人类如何回忆重要记忆，允许不太重要的细节逐渐淡出。
+- **总结过程：** 通过实用模型使用自然语言处理，Agent Zero 将提取的信息压缩为简洁的摘要。通过总结过去的交互，Agent Zero 可以快速回忆整个聊天的重要事实，从而提供更适当的响应。
+- **上下文相关性：** 根据与当前主题的相关性对总结的上下文进行优先排序，确保用户收到最相关的信息。
+
+**实现细节：**
+
+- **消息摘要：** 使用结构化格式对单个消息进行摘要，捕获关键信息同时减少 token 使用。
+- **动态压缩：** 系统采用智能压缩策略：
+  - 最近的消息保持原始形式以提供即时上下文。
+  - 较旧的消息逐渐压缩为更简洁的摘要。
+  - 多个压缩级别允许高效使用上下文窗口。
+  - 原始消息与摘要分开保存。
+- **上下文窗口优化：**
+  - 作为单个对话的近无限短期记忆。
+  - 根据可用空间和设置动态调整压缩比率。
+- **批量主题总结：**
+  - 将相关消息分组为主题块以更好地组织。
+  - 生成多个消息的简洁摘要，同时保留关键上下文。
+  - 实现长对话历史的高效导航。
+  - 维护相关主题之间的语义连接。
+
+通过动态调整上下文窗口和总结过去的交互，Agent Zero 提高了效率和用户体验。这种创新不仅反映了框架对动态和以用户为中心的承诺，还从人类认知过程中汲取灵感，使 AI 交互更加相关和有效。就像人类会忘记琐碎的细节一样，Agent Zero 智能地压缩信息以增强沟通。
+
+> [!NOTE]
+> 为了最大化上下文总结的有效性，用户应在交互过程中提供清晰和具体的指令。
+> 这有助于 Agent Zero 理解哪些细节最重要需要保留。
+
+### 4. 提示
+`prompts` 目录包含控制代理行为和通信的各种 Markdown 文件。最重要的文件是 `agent.system.main.md`，它作为中央枢纽，引用其他提示文件。
+
+#### 核心提示文件
+| 提示文件 | 描述 |
 |---|---|
-| agent.system.main.role.md | Defines the agent's overall role and capabilities |
-| agent.system.main.communication.md | Specifies how the agent should communicate |
-| agent.system.main.solving.md | Describes the agent's approach to tasks |
-| agent.system.main.tips.md | Provides additional tips or guidance |
-| agent.system.main.behaviour.md | Controls dynamic behavior adjustments and rules |
-| agent.system.main.environment.md | Defines the runtime environment context |
-| agent.system.tools.md | Organizes and calls the individual tool prompt files |
-| agent.system.tool.*.md | Individual tool prompt files |
+| agent.system.main.role.md | 定义代理的整体角色和能力 |
+| agent.system.main.communication.md | 指定代理应如何通信 |
+| agent.system.main.solving.md | 描述代理处理任务的方法 |
+| agent.system.main.tips.md | 提供额外的提示或指导 |
+| agent.system.main.behaviour.md | 控制动态行为调整和规则 |
+| agent.system.main.environment.md | 定义运行时环境上下文 |
+| agent.system.tools.md | 组织和调用各个工具提示文件 |
+| agent.system.tool.*.md | 各个工具提示文件 |
 
-#### Prompt Organization
-- **Default Prompts**: Located in `prompts/default/`, serve as the base configuration
-- **Custom Prompts**: Can be placed in custom subdirectories (e.g., `prompts/my-custom/`)
-- **Behavior Files**: Stored in memory as `behaviour.md`, containing dynamic rules
-- **Tool Prompts**: Organized in tool-specific files for modularity
+#### 提示组织
+- **默认提示：** 位于 `prompts/default/`，作为基本配置
+- **自定义提示：** 可以放在自定义子目录中（例如，`prompts/my-custom/`）
+- **行为文件：** 作为 `behaviour.md` 存储在记忆中，包含动态规则
+- **工具提示：** 在工具特定文件中组织，以实现模块化
 
-#### Custom Prompts
-1. Create directory in `prompts/` (e.g., `my-custom-prompts`)
-2. Copy and modify needed files from `prompts/default/`
-3. Agent Zero will merge your custom files with the default ones
-4. Select your custom prompts in the Settings page (Agent Config section)
+#### 自定义提示
+1. 在 `prompts/` 中创建目录（例如，`my-custom-prompts`）
+2. 从 `prompts/default/` 复制并修改所需文件
+3. Agent Zero 将合并您的自定义文件与默认文件
+4. 在设置页面（代理配置部分）选择您的自定义提示
 
-#### Dynamic Behavior System
-- **Behavior Adjustment**: 
-  - Agents can modify their behavior in real-time based on user instructions
-  - Behavior changes are automatically integrated into the system prompt
-  - Behavioral rules are merged intelligently, avoiding duplicates and conflicts
+#### 动态行为系统
+- **行为调整：**
+  - 代理可以根据用户指令实时修改其行为
+  - 行为更改自动集成到系统提示中
+  - 行为规则智能合并，避免重复和冲突
 
-- **Behavior Management Components**:
-  - `behaviour_adjustment.py`: Core tool for updating agent behavior
-  - `_20_behaviour_prompt.py`: Extension that injects behavior rules into system prompt
-  - Custom rules stored in the agent's memory directory as `behaviour.md`
+- **行为管理组件：**
+  - `behaviour_adjustment.py`：更新代理行为的核心工具
+  - `_20_behaviour_prompt.py`：将行为规则注入系统提示的扩展
+  - 自定义规则作为 `behaviour.md` 存储在代理的记忆目录中
 
-- **Behavior Update Process**:
-  1. User requests behavior changes (e.g., "respond in UK English")
-  2. System identifies behavioral instructions in conversation
-  3. New rules are merged with existing ruleset
-  4. Updated behavior is immediately applied
+- **行为更新过程：**
+  1. 用户请求行为更改（例如，"用英式英语回复"）
+  2. 系统在对话中识别行为指令
+  3. 新规则与现有规则集合并
+  4. 更新的行为立即应用
 
-![Behavior Adjustment](res/ui-behavior-change-chat.png)
+![行为调整](res/ui-behavior-change-chat.png)
 
-- **Integration with System Prompt**:
-  - Behavior rules are injected at the start of the system prompt
-  - Rules are formatted in a structured markdown format
-  - Changes are applied without disrupting other components
-  - Maintains separation between core functionality and behavioral rules
+- **与系统提示的集成：**
+  - 行为规则在系统提示开始时注入
+  - 规则以结构化的 markdown 格式格式化
+  - 更改在不破坏其他组件的情况下应用
+  - 保持核心功能和行为规则之间的分离
 
 > [!NOTE]  
-> You can customize any of these files. Agent Zero will use the files in your custom `prompts_subdir` 
-> if they exist, otherwise, it will fall back to the files in `prompts/default`.
+> 您可以自定义这些文件中的任何一个。如果您的自定义 `prompts_subdir` 中存在文件，
+> Agent Zero 将使用这些文件，否则将回退到 `prompts/default` 中的文件。
 
 > [!TIP]
-> The behavior system allows for dynamic adjustments without modifying the base prompt files.
-> Changes made through behavior rules persist across sessions while maintaining the core functionality.
+> 行为系统允许动态调整，而无需修改基本提示文件。
+> 通过行为规则进行的更改在会话之间保持，同时保持核心功能。
 
-### 5. Knowledge
-Knowledge refers to the user-provided information and data that agents can leverage:
+### 5. 知识
+知识是指代理可以利用的用户提供的信息和数据：
 
-- **Custom Knowledge**: Add files to `/knowledge/custom/main` directory manually or through the "Import Knowledge" button in the UI
-  - Supported formats: `.txt`, `.pdf`, `.csv`, `.html`, `.json`, `.md`
-  - Automatically imported and indexed
-  - Expandable format support
+- **自定义知识：** 通过 UI 中的"导入知识"按钮手动或自动将文件添加到 `/knowledge/custom/main` 目录
+  - 支持的格式：`.txt`、`.pdf`、`.csv`、`.html`、`.json`、`.md`
+  - 自动导入和索引
+  - 可扩展的格式支持
 
-- **Knowledge Base**: 
-  - Can include PDFs, databases, books, documentation
-  - `/docs` folder automatically added
-  - Used for answering questions and decision-making
-  - Supports RAG-augmented tasks
+- **知识库：**
+  - 可以包括 PDF、数据库、书籍、文档
+  - 自动添加 `/docs` 文件夹
+  - 用于回答问题和决策
+  - 支持 RAG 增强任务
 
-### 6. Instruments
-Instruments provide a way to add custom functionalities to Agent Zero without adding to the token count of the system prompt:
-- Stored in long-term memory of Agent Zero
-- Unlimited number of instruments available
-- Recalled when needed by the agent
-- Can modify agent behavior by introducing new procedures
-- Function calls or scripts to integrate with other systems
-- Scripts are run inside the Docker Container
+### 6. 工具集
+工具集提供了一种向 Agent Zero 添加自定义功能的方法，而不会增加系统提示的 token 数量：
+- 存储在 Agent Zero 的长期记忆中
+- 可用的工具集数量不限
+- 在代理需要时调用
+- 可以通过引入新程序修改代理行为
+- 函数调用或脚本以与其他系统集成
+- 脚本在 Docker 容器内运行
 
-#### Adding Instruments
-1. Create folder in `instruments/custom` (no spaces in name)
-2. Add `.md` description file for the interface
-3. Add `.sh` script (or other executable) for implementation
-4. The agent will automatically detect and use the instrument
+#### 添加工具集
+1. 在 `instruments/custom` 中创建文件夹（名称中不含空格）
+2. 添加 `.md` 描述文件作为接口
+3. 添加 `.sh` 脚本（或其他可执行文件）作为实现
+4. 代理将自动检测并使用该工具集
 
-### 7. Extensions
-Extensions are a powerful feature of Agent Zero, designed to keep the main codebase clean and organized while allowing for greater flexibility and modularity.
+### 7. 扩展
+扩展是 Agent Zero 的强大功能，旨在保持主代码库的整洁和组织，同时允许更大的灵活性和模块化。
 
-#### Structure
-Extensions can be found in `python/extensions` directory:
-- **Folder Organization**: Extensions are stored in designated subfolders corresponding to different aspects of the agent's message loop
-- **Execution Order**: Files are executed in alphabetical order for predictable behavior
-- **Naming Convention**: Files start with numbers to control execution order
-- **Modularity**: Each extension focuses on a specific functionality
+#### 结构
+扩展可以在 `python/extensions` 目录中找到：
+- **文件夹组织：** 扩展存储在指定的子文件夹中，对应于代理消息循环的不同方面
+- **执行顺序：** 文件按字母顺序执行，以实现可预测的行为
+- **命名约定：** 文件以数字开头以控制执行顺序
+- **模块化：** 每个扩展专注于特定功能
 
-#### Types
-- **Message Loop Prompts**: Handle system messages and history construction
-- **Memory Management**: Handle recall and solution memorization
-- **System Integration**: Manage interaction with external systems
+#### 类型
+- **消息循环提示：** 处理系统消息和历史构建
+- **记忆管理：** 处理回忆和解决方案记忆
+- **系统集成：** 管理与外部系统的交互
 
-#### Adding Extensions
-1. Create Python file in appropriate `python/extensions` subfolder
-2. Follow naming convention for execution order (start with number)
-3. Implement functionality following existing patterns
-4. Ensure compatibility with main system
-5. Test thoroughly before deployment
+#### 添加扩展
+1. 在适当的 `python/extensions` 子文件夹中创建 Python 文件
+2. 遵循执行顺序的命名约定（以数字开头）
+3. 按照现有模式实现功能
+4. 确保与主系统兼容
+5. 部署前彻底测试
 
 > [!NOTE]  
-> Consider contributing valuable custom components to the main repository.
-> See [Contributing](contribution.md) for more information.
+> 考虑将有价值的自定义组件贡献给主仓库。
+> 有关更多信息，请参见[贡献](contribution.md)。
